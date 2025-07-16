@@ -3,6 +3,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../paginas/Dashboard";
 import Quejas from "../paginas/Quejas";
 import React from 'react';
+import ControlSeguridad from "../paginas/controlSeguridad"
 
 
 
@@ -11,7 +12,7 @@ export default function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<ControlSeguridad />} />
           <Route path="quejas" element={<Quejas />} />
         </Route>
       </Routes>

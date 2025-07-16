@@ -1,0 +1,81 @@
+.sidebar {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  bottom: 24px;
+  width: 260px;
+  border-radius: 16px;
+  padding: 0 16px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.sidebar header {
+  display: flex;
+  align-items: center;
+  height: 72px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar header button {
+  background: none;
+  border: none;
+  width: 52px;
+  cursor: pointer;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin: 4px 0;
+}
+
+.sidebar button {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: none;
+  border: none;
+  color: white;
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar button p {
+  flex: 1;
+}
+
+.sub-menu {
+  overflow: hidden;
+  transition: height 0.3s ease;
+}
+
+.sub-menu ul {
+  padding: 0;
+  margin: 0;
+}
+
+.sub-menu li {
+  padding-left: 32px;
+}
+
+.sub-menu button {
+  height: 40px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
