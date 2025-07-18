@@ -4,11 +4,9 @@
 
 body {
   margin: 0;
-  background-image: url("bg.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50%;
+  background: linear-gradient(to bottom, rgb(255, 0, 0), rgb(255, 0, 0));
   height: 100vh;
+
   font-family: "Euclid Circular A";
 }
 
@@ -22,17 +20,17 @@ button {
 
 .sidebar {
   position: fixed;
-  top: 24px;
-  left: 24px;
-  bottom: 24px;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: 260px;
-  border-radius: 16px;
+  border-radius: 0px;
   padding: 0 16px;
-  border: 1px solid rgb(255 255 255 / 8%);
-  background: rgb(0 0 0 / 40%);
+  background: rgb(255, 0, 0);
+  background: linear-gradient(to bottom, #0a2841, #0a2841);
   backdrop-filter: blur(20px);
   transition: width 0.4s;
 }
@@ -74,7 +72,7 @@ button {
 }
 
 .sidebar button:is(.active, :hover) {
-  background: rgb(0 0 0 / 30%);
+  background: rgba(141, 20, 20, 0.3);
 }
 
 .sidebar button i {
@@ -86,7 +84,7 @@ button {
 }
 
 .sidebar button:not(.active):hover {
-  background: rgb(0 0 0 / 10%);
+  background: rgba(255, 255, 255, 0.553);
 }
 
 .sidebar ul {
@@ -136,4 +134,10 @@ button {
   width: 20px;
   max-width: 20px;
   min-width: 20px;
+}
+
+.menu-icon {
+  width: 24px;     /* ancho fijo */
+  height: 24px;    /* alto fijo */
+  object-fit: contain; /* para que mantenga la proporción sin deformarse */
 }
