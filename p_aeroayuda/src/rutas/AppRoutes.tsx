@@ -3,7 +3,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../paginas/Dashboard";
 import Quejas from "../paginas/Quejas";
 import React from 'react';
-import ControlSeguridad from "../paginas/controlSeguridad"
+import ControlSeguridad from "../paginas/ControlSeguridad"
 
 
 
