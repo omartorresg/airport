@@ -1,18 +1,36 @@
 /* VerificacionPase.css */
 
-.contenedor{
-    margin-left: 50px;
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* <- hace que el contenedor use todo el alto de la pantalla */
+  padding: 0 20px; /* opcional: algo de espacio lateral, pero no vertical */
+  box-sizing: border-box; /* para que el padding no aumente el alto total */
 }
+
 
 .contenedor-verificacion {
   padding: 30px;
   font-family: Arial, sans-serif;
-  max-width: 500px;
+  width: 600px;
   margin: auto;
+  background-color: white;
+  border-radius: 10px;
+   box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
 }
 
 .titulo-verificacion {
   margin-bottom: 20px;
+  color: white;
+  font-size: 40px;
+  max-width: 300px;
+  padding: 15px;
+  margin-left: 350px;
+  display: inline-block;
+  border-bottom: 5px solid #008cff;
+  padding-bottom: 20px;
+   margin-top: 13px;
 }
 
 .input-verificacion {
@@ -20,17 +38,35 @@
   margin-bottom: 15px;
   width: 100%;
   padding: 8px;
+  border: 2px solid #b5b5b5;;
+  border-radius: 5px;
+}
+
+.input-verificacion:focus {
+  border-color: rgba(0, 140, 255, 0.5);
 }
 
 .boton-verificar {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #007bff;
+  background-color: #1576c6;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+margin-top: 30px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.etiqueta {
+  display: inline-block;
+  border-bottom: 2px solid #7ea0bb;
+  padding-bottom: 4px;
+  margin-bottom: 15px;
+   margin-top: 13px;
 }
 
 .resultado-ok {

@@ -4,10 +4,20 @@
 
 body {
   margin: 0;
-  background: linear-gradient(to bottom, rgb(255, 0, 0), rgb(255, 0, 0));
+  background: linear-gradient(to bottom,#ff0000 ,#ff2828, rgb(250, 75, 75));
   height: 100vh;
 
   font-family: "Euclid Circular A";
+}
+
+.sidebar-logo {
+  width: 100px;  /* Puedes ajustar esto */
+  height: auto;  /* Mantiene la proporción */
+  
+  margin: 0 auto;
+  margin-top: 40px;
+    /* Opcional: centra horizontalmente */
+  padding: 10px 0; /* Espaciado superior/inferior opcional */
 }
 
 button {
@@ -29,8 +39,8 @@ button {
   width: 260px;
   border-radius: 0px;
   padding: 0 16px;
-  background: rgb(255, 0, 0);
-  background: linear-gradient(to bottom, #0a2841, #0a2841);
+  background: linear-gradient(to bottom, #1576c6, #024781);
+  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
   backdrop-filter: blur(20px);
   transition: width 0.4s;
 }
@@ -38,17 +48,26 @@ button {
 .sidebar header {
   display: flex;
   align-items: center;
-  height: 72px;
-  padding: 0 1.25rem 0 0;
-  border-bottom: 1px solid rgb(255 255 255 / 8%);
+  padding: 0 2px 5px 0; /* padding-bottom mayor */
+ 
+  border-bottom: 3px solid rgb(255 255 255 / 8%);
+  color: white;
+  gap: 7px;
+  margin-left: 13px;
+  /* height: 72px;  quitar o comentar */
+}
+
+
+.sidebar header h1{
+margin-bottom: 40px;
 }
 
 .sidebar header button {
   width: 52px;
 }
 
-.sidebar header img {
-  height: 24px;
+.menu-icon {
+  height: 28px;
 }
 
 .sidebar button {
@@ -72,7 +91,7 @@ button {
 }
 
 .sidebar button:is(.active, :hover) {
-  background: rgba(141, 20, 20, 0.3);
+  background: #01519291;
 }
 
 .sidebar button i {
@@ -84,7 +103,8 @@ button {
 }
 
 .sidebar button:not(.active):hover {
-  background: rgba(255, 255, 255, 0.553);
+  background: #01519291;
+ 
 }
 
 .sidebar ul {
@@ -134,6 +154,10 @@ button {
   width: 20px;
   max-width: 20px;
   min-width: 20px;
+}
+
+.opciones{
+  margin-top: 10px;
 }
 
 .menu-icon {

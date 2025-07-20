@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/Sidebar.css";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo1.svg";
 import { menuItems } from "../data/menuItems";
 import { MenuItem, SubMenuItem } from "../tipos/menuItems"; // Asegúrate de tener este archivo
 
@@ -16,8 +16,8 @@ export default function Sidebar() {
     <aside className="sidebar">
       <header>
         <img src={logo} alt="Logo" className="sidebar-logo" />
-        <h2>Aeropuerto</h2>
       </header>
+      <div className="opciones">
 
       <ul>
         {menuItems.map((item: MenuItem) => (
@@ -51,6 +51,7 @@ export default function Sidebar() {
           </li>
         ))}
       </ul>
+      </div>
     </aside>
   );
 }

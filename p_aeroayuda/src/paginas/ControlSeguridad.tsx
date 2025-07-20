@@ -24,12 +24,12 @@ export default function VerificacionPase() {
 
   return (
     <div className="contenedor">
-  <h1 className="titulo-verificacion">🔷 Verificación del Pase de Abordaje y Documentación</h1>
+  <h1 className="titulo-verificacion">Verificación del Pase de Abordaje y Documentación</h1>
     <div className="contenedor-verificacion">
       
 
       <label>
-        📷 Código QR / Código de Barras:
+        <span className='etiqueta'>Código QR / Código de Barras</span>
         <input
           type="text"
           placeholder="Escanea o escribe el código"
@@ -40,7 +40,7 @@ export default function VerificacionPase() {
       </label>
 
       <label>
-        🧑 Nombre Completo:
+        <span className='etiqueta'>Nombre Completo</span>
         <input
           type="text"
           placeholder="Ej: Juan Pérez"
@@ -51,7 +51,7 @@ export default function VerificacionPase() {
       </label>
 
       <label>
-        🪪 Tipo de Documento:
+        <span className='etiqueta'>Tipo de Documento</span>
         <input
           type="text"
           placeholder="Ej: DNI, Pasaporte"
@@ -62,7 +62,7 @@ export default function VerificacionPase() {
       </label>
 
       <label>
-        🔢 Número de Documento:
+        <span className='etiqueta'>Número de Documento</span>
         <input
           type="text"
           placeholder="Ej: 001-2345678-9"
@@ -73,7 +73,7 @@ export default function VerificacionPase() {
       </label>
 
       <button onClick={manejarVerificacion} className="boton-verificar">
-        ✅ Verificar
+        Verificar
       </button>
 
       {resultado === 'coincide' && (
