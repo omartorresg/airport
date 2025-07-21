@@ -8,6 +8,8 @@ import gestionPersonalIcon from "../assets/icons/gestionPersonal.svg";
 import notificacionIcon from "../assets/icons/notificacion.svg";
 import quejasIcon from "../assets/icons/quejas.svg";
 import securityIcon from "../assets/icons/security.svg";
+import Quejas from "../componentes/FormQueja";
+
 
 export const menuItems: MenuItem[] = [
   { label: "Aduanas", icon: aduanasIcon, path: "/aduanas" },
@@ -25,4 +27,5 @@ export const menuItems: MenuItem[] = [
   { label: "Notificaciones", icon: notificacionIcon, path: "/notificaciones" },
   { label: "Quejas", icon: quejasIcon, path: "/quejas" },
   { label: "Seguridad", icon: securityIcon, path: "/seguridad" },
+  
 ];

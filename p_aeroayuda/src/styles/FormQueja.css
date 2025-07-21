@@ -1,0 +1,105 @@
+/* FormQueja.css o VerificacionPase.css */
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  
+  .contenedor-verificacion {
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    width: 600px;
+    margin: auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
+  }
+  
+  .titulo-verificacion {
+    margin-bottom: 20px;
+    color: white;
+    font-size: 40px;
+    max-width: 600px;
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    border-bottom: 5px solid #008cff;
+    padding-bottom: 20px;
+    margin-top: 13px;
+  }
+  
+  .etiqueta {
+    display: inline-block;
+    border-bottom: 2px solid #7ea0bb;
+    padding-bottom: 4px;
+    margin-bottom: 5px;
+    margin-top: 13px;
+    font-weight: bold;
+  }
+  
+  .input-verificacion {
+    display: block;
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #b5b5b5;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    resize: none;
+  }
+  
+  .input-verificacion:focus {
+    border-color: rgba(0, 140, 255, 0.5);
+    outline: none;
+  }
+  
+  textarea.input-verificacion {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  select.input-verificacion {
+    background-color: #fff;
+    appearance: none;
+  }
+  
+  .boton-verificar {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #1576c6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s ease;
+  }
+  
+  .boton-verificar:hover {
+    background-color: #0c5ca5;
+  }
+  
+  .resultado-ok {
+    color: green;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  .resultado-error {
+    color: red;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
+  }
+  
