@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #c9d6ff, #e2e2e2);
+    background: linear-gradient(135deg, #ff2828, );
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 2rem;
 }
@@ -41,7 +41,7 @@
 .checkin-button {
     width: 100%;
     padding: 0.8rem;
-    background-color: #4f46e5;
+    background-color:#1576c6;
     color: white;
     font-size: 1rem;
     border: none;

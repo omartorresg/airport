@@ -31,7 +31,7 @@ export default function FormQueja() {
 
   return (
     <form className="contenedor-verificacion" onSubmit={manejarEnvio}>
-      <h3 className="titulo-verificacion">📋 Formulario de Quejas</h3>
+      <h3 className="titulo-verificacion"> Formulario de Quejas</h3>
 
       <label>
         <span className='etiqueta'>Nombre Completo</span>

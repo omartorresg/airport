@@ -4,7 +4,6 @@ import { Button } from "../componentes/ui/button";
 import { Card, CardContent } from "../componentes/ui/card";
 import "../styles/checkin.css";
 
-
 interface Pasajero {
   id: string;
   nombre: string;
@@ -36,7 +35,7 @@ export default function CheckIn() {
   return (
     <div className="checkin-container">
       <div className="checkin-card">
-        <h1>Check-In de Pasajeros</h1>
+        <h1 className="checkin-title">Check-In de Pasajeros</h1>
 
         <input
           className="checkin-input"
@@ -63,10 +62,7 @@ export default function CheckIn() {
                   value={asiento}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAsiento(e.target.value)}
                 />
-                <button
-                  className="checkin-button"
-                  onClick={confirmarCheckIn}
-                >
+                <button className="checkin-button" onClick={confirmarCheckIn}>
                   Confirmar Check-In
                 </button>
               </div>
