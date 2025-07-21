@@ -98,6 +98,20 @@ margin-bottom: 40px;
   transition: 0.3s;
 }
 
+.sub-menu ul li a {
+  display: block;
+  padding: 10px 16px 10px 52px; /* similar al botón principal + indentado */
+  color: rgb(255 255 255 / 95%);
+  text-decoration: none;
+  font-size: 15px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.sub-menu ul li a:hover {
+  background: #01519291;
+}
+
 .sidebar button.active > i:nth-child(3) {
   rotate: -180deg;
 }
@@ -116,17 +130,20 @@ margin-bottom: 40px;
 }
 
 .sub-menu {
-  position: relative;
   overflow: hidden;
-  height: 0;
-  transition: 0.5s;
+  max-height: 0;
+  transition: max-height 0.30s ease;
+}
+
+.sub-menu.abierto {
+  max-height: 1000px; /* grande suficiente para tus subitems */
 }
 
 .sub-menu ul {
-  position: absolute;
-  top: 0;
-  left: 0;
+ padding: 0;
+  margin: 0;
   display: grid;
+  gap: 5px;
 }
 
 .sub-menu button {
@@ -158,6 +175,21 @@ margin-bottom: 40px;
 
 .opciones{
   margin-top: 10px;
+  flex: 1; /* toma el espacio vertical restante */
+  overflow-y: auto;
+  padding-right: 5px; /* espacio para la barra de scroll */
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+.opciones::-webkit-scrollbar {
+  width: 6px;
+}
+
+.opciones::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
 }
 
 .menu-icon {

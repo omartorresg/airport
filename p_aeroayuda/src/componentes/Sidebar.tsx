@@ -33,12 +33,7 @@ export default function Sidebar() {
             </button>
 
             {item.subItems && (
-              <div
-                className="sub-menu"
-                style={{
-                  height: active === item.label ? `${item.subItems.length * 40}px` : "0px",
-                }}
-              >
+             <div className={`sub-menu ${active === item.label ? "abierto" : ""}`}>
                 <ul>
                   {item.subItems.map((sub: SubMenuItem) => (
                     <li key={sub.label}>
