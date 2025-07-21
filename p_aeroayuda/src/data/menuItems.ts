@@ -53,15 +53,6 @@ export const menuItems: MenuItem[] = [
       { label: "Sincronización con Aeronave", path: "/embarque/sincronizacion" },
     ],
   },
-<<<<<<< HEAD
-  { label: "Emergencia", icon: emergenciaIcon, path: "/emergencia" },
-  { label: "Gestión Personal", icon: gestionPersonalIcon, path: "/gestion" },
-  { label: "Notificaciones", icon: notificacionIcon, path: "/notificaciones" },
-  { label: "Quejas", icon: quejasIcon, path: "/quejas" },
-  { label: "Seguridad", icon: securityIcon, path: "/seguridad" },
-  
-];
-=======
   {
     label: "Emergencia",
     icon: emergenciaIcon,
@@ -128,4 +119,3 @@ export const menuItems: MenuItem[] = [
     ],
   },
 ];
->>>>>>> 64bf73e77df827304ed0a27639b74237cb795110
