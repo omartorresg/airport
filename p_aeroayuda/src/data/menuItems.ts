@@ -110,7 +110,7 @@ export const menuItems: MenuItem[] = [
     icon: securityIcon,
     path: "/seguridad",
     subItems: [
-      { label: "Verificación del Pase", path: "/seguridad/pase" },
+      { label: "Verificación del Pase", path: "/paginas/ControlSeguridad" },
       { label: "Control de Acceso", path: "/seguridad/acceso" },
       { label: "Inspección Equipaje Mano", path: "/seguridad/equipaje" },
       { label: "Inspección del Pasajero", path: "/seguridad/pasajero" },

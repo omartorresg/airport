@@ -16,7 +16,7 @@ export default function AppRoutes() {
         <Route path="quejas" element={<Quejas />} />
         <Route path="checkin" element={<CheckIn />} />
         <Route path="dashboard" element={<Dashboard />} />
-
+<Route path="paginas/ControlSeguridad" element={<ControlSeguridad />} />
         {/* 👉 Aquí agregamos la ruta que faltaba */}
         <Route path="paginas/ClasificacionRegistro" element={<ClasificacionRegistro />} />
       </Route>
