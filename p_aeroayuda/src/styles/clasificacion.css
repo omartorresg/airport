@@ -16,8 +16,7 @@ body {
 }
 
 .titulo-container {
-  max-width: 340px;
-  margin-top: 20px;
+  max-width: 335px;
   margin-left: 330px;
 }
 
@@ -30,7 +29,6 @@ body {
   padding-bottom: 10px;
   word-break: break-word;
   margin: 0;
-  margin-top: 90px;
 }
 
 .contenedor-verificacion {
@@ -50,6 +48,7 @@ body {
   border: 2px solid #b5b5b5;
   border-radius: 5px;
   box-sizing: border-box;
+  font-size: 14px;
 }
 
 .input-verificacion:focus {
@@ -82,13 +81,6 @@ body {
 
 .resultado-ok {
   color: green;
-  font-weight: bold;
-  margin-top: 20px;
-  text-align: center;
-}
-
-.resultado-error {
-  color: red;
   font-weight: bold;
   margin-top: 20px;
   text-align: center;

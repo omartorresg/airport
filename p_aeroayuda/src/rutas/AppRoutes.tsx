@@ -1,23 +1,25 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// rutas/AppRoutes.tsx
+import { Routes, Route } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../paginas/Dashboard";
-import React from 'react';
-import ControlSeguridad from "../paginas/ControlSeguridad"
+import ControlSeguridad from "../paginas/ControlSeguridad";
 import Quejas from "../paginas/Quejas";
 import CheckIn from "../paginas/Checkin";
-
-
-
+import ClasificacionRegistro from "../paginas/ClasificacionRegistro"; // 👈 importar aquí
+import React from "react";
 
 export default function AppRoutes() {
   return (
-      <Routes>
+    <Routes>
       <Route path="/" element={<DashboardLayout />}>
+        <Route index element={<ControlSeguridad />} />
         <Route path="quejas" element={<Quejas />} />
-        <Route path="seguridad" element={<ControlSeguridad />} />
         <Route path="checkin" element={<CheckIn />} />
-        </Route>
-      </Routes>
+        <Route path="dashboard" element={<Dashboard />} />
+
+        {/* 👉 Aquí agregamos la ruta que faltaba */}
+        <Route path="paginas/ClasificacionRegistro" element={<ClasificacionRegistro />} />
+      </Route>
+    </Routes>
   );
 }
-

@@ -58,7 +58,7 @@ export const menuItems: MenuItem[] = [
     icon: emergenciaIcon,
     path: "/emergencia",
     subItems: [
-      { label: "Clasificación y Registro", path: "/emergencia/clasificacion" },
+      { label: "Clasificación y Registro", path: "/paginas/ClasificacionRegistro" },
       { label: "Activación de Protocolo", path: "/emergencia/protocolo" },
       { label: "Asignación de Roles", path: "/emergencia/roles" },
       { label: "Comunicación y Coordinación", path: "/emergencia/comunicacion" },
