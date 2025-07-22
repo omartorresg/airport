@@ -22,6 +22,16 @@
   margin-top: 40px;
     /* Opcional: centra horizontalmente */
   padding: 10px 0; /* Espaciado superior/inferior opcional */
+  
+   align-items: center;     /* Centra horizontalmente */
+  justify-content: center;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh; /* puedes ajustar esto según el diseño */
 }
 
 .login-container input {

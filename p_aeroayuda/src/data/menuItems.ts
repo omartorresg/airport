@@ -31,7 +31,7 @@ export const menuItems: MenuItem[] = [
     icon: checkinIcon,
     path: "/checkin",
     subItems: [
-      { label: "Verificación de Reserva", path: "/checkin/reserva" },
+      { label: "Verificación de Reserva", path: "/paginas/Checkin" },
       { label: "Asignación de Asiento", path: "/checkin/asiento" },
       { label: "Registro de Equipaje", path: "/checkin/equipaje" },
       { label: "Generación del Pase de Abordaje", path: "/checkin/pase" },
@@ -95,7 +95,7 @@ export const menuItems: MenuItem[] = [
     icon: quejasIcon,
     path: "/quejas",
     subItems: [
-      { label: "Categorización y Asignación", path: "/quejas/categorizacion" },
+      { label: "Categorización y Asignación", path: "/paginas/Quejas" },
       { label: "Niveles de Prioridad", path: "/quejas/prioridad" },
       { label: "Disponibilidad de Personal", path: "/quejas/disponibilidad" },
       { label: "Matriz de Escalabilidad", path: "/quejas/escalabilidad" },
