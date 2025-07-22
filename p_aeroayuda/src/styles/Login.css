@@ -14,6 +14,16 @@
   color: #1e1e1e;
 }
 
+.logo {
+  width: 100px;  /* Puedes ajustar esto */
+  height: auto;  /* Mantiene la proporción */
+  color: #0077ff;
+  margin: 0 auto;
+  margin-top: 40px;
+    /* Opcional: centra horizontalmente */
+  padding: 10px 0; /* Espaciado superior/inferior opcional */
+}
+
 .login-container input {
   width: 100%;
   padding: 10px;
@@ -35,4 +45,16 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.remember-me input {
+  margin-right: 8px;
 }

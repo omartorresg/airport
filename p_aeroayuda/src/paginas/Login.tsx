@@ -1,13 +1,25 @@
-// src/components/Login.tsx
-import React, { useState } from 'react';
-import  supabase  from '../SupabaseClient';
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../SupabaseClient';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
+import logo from "../assets/logo1.svg";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(localStorage.getItem('rememberEmail') || '');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(!!localStorage.getItem('rememberEmail'));
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  // Si hay sesión activa, redirigir al dashboard
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) {
+        navigate('/dashboard');
+      }
+    });
+  }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +34,12 @@ export default function Login() {
       setErrorMsg(error.message);
     } else {
       setErrorMsg('');
-      window.location.href = '/dashboard'; // Redirige a tu menú principal o módulo
+      if (rememberMe) {
+        localStorage.setItem('rememberEmail', email);
+      } else {
+        localStorage.removeItem('rememberEmail');
+      }
+      navigate('/dashboard');
     }
 
     setLoading(false);
@@ -30,6 +47,7 @@ export default function Login() {
 
   return (
     <div className="login-container">
+      <img src={logo} alt="Logo" className="logo" />
       <h1>Login Aeropuerto</h1>
       <form onSubmit={handleLogin}>
         <input
@@ -46,6 +64,17 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
+        <div className="remember-me">
+          <input
+            type="checkbox"
+            id="rememberMe"
+            checked={rememberMe}
+            onChange={() => setRememberMe(!rememberMe)}
+          />
+          <label htmlFor="rememberMe">Recordar correo</label>
+        </div>
+
         {errorMsg && <p className="error">{errorMsg}</p>}
         <button type="submit" disabled={loading}>
           {loading ? 'Ingresando...' : 'Iniciar Sesión'}
