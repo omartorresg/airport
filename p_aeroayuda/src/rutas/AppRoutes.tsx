@@ -5,6 +5,7 @@ import Dashboard from "../paginas/Dashboard";
 import ControlSeguridad from "../paginas/ControlSeguridad";
 import Quejas from "../paginas/Quejas";
 import CheckIn from "../paginas/Checkin";
+import Login from "../paginas/Login";
 import ClasificacionRegistro from "../paginas/ClasificacionRegistro"; // 👈 importar aquí
 import React from "react";
 
@@ -16,7 +17,8 @@ export default function AppRoutes() {
         <Route path="quejas" element={<Quejas />} />
         <Route path="checkin" element={<CheckIn />} />
         <Route path="dashboard" element={<Dashboard />} />
-
+         <Route path="login" element={<Login />} />
+         <Route path="/dashboard" element={<Dashboard />} />
         {/* 👉 Aquí agregamos la ruta que faltaba */}
         <Route path="paginas/ClasificacionRegistro" element={<ClasificacionRegistro />} />
       </Route>
