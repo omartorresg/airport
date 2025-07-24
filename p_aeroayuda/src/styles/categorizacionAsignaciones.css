@@ -1,0 +1,43 @@
+.modulo-quejas {
+    padding: 20px;
+    background-color: #eaf1f7;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  textarea, select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .lista-quejas ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .lista-quejas li {
+    margin-bottom: 6px;
+  }
+  
