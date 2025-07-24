@@ -1,4 +1,8 @@
 /* FormQueja.css o VerificacionPase.css */
+body{
+ 
+}
+
 
 .titulo-verificacion{
   
@@ -12,6 +16,8 @@
     height: 100vh;
     padding: 0 20px;
     box-sizing: border-box;
+     margin-top: 50px;
+  margin-bottom: 50px;
   }
   
   .contenedor-verificacion {

@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  background: linear-gradient(to bottom,#ff0000 ,#ff2828, rgb(250, 75, 75));
+  background: linear-gradient(to bottom,#ff0000 ,#ff2828, rgb(250, 75, 75)) no-repeat fixed;
   height: 100vh;
 
   font-family: "Euclid Circular A";
