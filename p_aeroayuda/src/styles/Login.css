@@ -10,31 +10,28 @@
 }
 
 .login-container h1 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 30px;
   color: #1e1e1e;
 }
 
 .logo {
-  width: 100px;  /* Puedes ajustar esto */
-  height: auto;  /* Mantiene la proporción */
-  color: #0077ff;
+  width: 100px;
+  height: auto;
   margin: 0 auto;
   margin-top: 40px;
-    /* Opcional: centra horizontalmente */
-  padding: 10px 0; /* Espaciado superior/inferior opcional */
-  
-   align-items: center;     /* Centra horizontalmente */
-  justify-content: center;
+  padding: 10px 0;
+  display: block;
 }
 
 .logo-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30vh; /* puedes ajustar esto según el diseño */
+  height: 30vh;
 }
 
-.login-container input {
+.login-container input[type="email"],
+.login-container input[type="password"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 1rem;
@@ -47,6 +44,7 @@
   margin-bottom: 1rem;
 }
 
+/* BOTÓN centrado */
 .login-container button {
   width: 100%;
   padding: 10px;
@@ -55,16 +53,38 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 8px;
 }
 
+/* REMEMBER ME ajustado */
 .remember-me {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
   font-size: 0.9rem;
   color: #333;
+  flex-wrap: nowrap;
+margin-top: 5px;
 }
 
-.remember-me input {
-  margin-right: 8px;
+.remember-me .left-side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap; /* ← evita salto de línea */
+}
+
+.remember-me .right-side {
+  color: #0077ff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.remember-me .right-side:hover {
+  text-decoration: underline;
 }

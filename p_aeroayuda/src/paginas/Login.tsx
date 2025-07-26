@@ -91,7 +91,7 @@ export default function Login() {
         <img src={logo} alt="Logo" className="logo" />
       </div>
       <div className="login-container">
-        <h1>Login Aeropuerto</h1>
+        <h1>¡Bienvenido!</h1>
         <form onSubmit={handleLogin}>
           <input
             type="email"
@@ -108,13 +108,16 @@ export default function Login() {
             required
           />
           <div className="remember-me">
-            <input
-              type="checkbox"
-              id="rememberMe"
-              checked={rememberMe}
-              onChange={() => setRememberMe(!rememberMe)}
-            />
-            <label htmlFor="rememberMe">Recordar correo</label>
+            <label htmlFor="rememberMe" className="left-side">
+              <input
+                type="checkbox"
+                id="rememberMe"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
+              Recordar cuenta
+            </label>
+            <a href="#" className="right-side">¿Olvidaste la contraseña?</a>
           </div>
           <button type="submit" disabled={loading}>
             {loading ? 'Ingresando...' : 'Iniciar Sesión'}
