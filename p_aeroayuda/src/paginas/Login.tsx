@@ -1,24 +1,95 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import logo from "../assets/logo1.svg";
+import { supabase } from '../SupabaseClient';
+import bcrypt from 'bcryptjs';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  // Recuperar email guardado (si aplica)
+  useEffect(() => {
+    const recordado = localStorage.getItem('emailRecordado');
+    if (recordado) {
+      setEmail(recordado);
+      setRememberMe(true);
+    }
+  }, []);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/paginas/ControlSeguridad'); // redirige siempre
+    setError('');
+    setLoading(true);
+
+    // 1. Buscar usuario + rol
+    const { data: user, error: fetchError } = await supabase
+      .from('usuarios_login')
+      .select('*, roles (nombre_rol)')
+      .eq('email', email)
+      .single();
+
+    if (fetchError || !user) {
+      setError('Correo no encontrado');
+      setLoading(false);
+      return;
+    }
+
+    // 2. Verificar contraseña
+    const passwordOk = await bcrypt.compare(password, user.password_hash);
+    if (!passwordOk) {
+      setError('Contraseña incorrecta');
+      setLoading(false);
+      return;
+    }
+
+    if (user.estado !== 'activo') {
+      setError('Usuario inactivo o bloqueado');
+      setLoading(false);
+      return;
+    }
+
+    // 3. Guardar sesión
+    localStorage.setItem('usuario', JSON.stringify(user));
+    if (rememberMe) {
+      localStorage.setItem('emailRecordado', email);
+    } else {
+      localStorage.removeItem('emailRecordado');
+    }
+
+    // 4. Redirección dinámica según nombre del rol
+    const nombreRol = user.roles?.nombre_rol?.toLowerCase();
+
+    switch (nombreRol) {
+      case 'administrador':
+        navigate('/admin');
+        break;
+      case 'seguridad':
+        navigate('/paginas/ControlSeguridad');
+        break;
+      case 'atencion':
+        navigate('/paginas/AtencionUsuario');
+        break;
+      case 'emergencias':
+        navigate('/paginas/GestionEmergencias');
+        break;
+      default:
+        navigate('/'); // ruta por defecto
+    }
+
+    setLoading(false);
   };
 
   return (
     <>
       <div className="logo-container">
-  <img src={logo} alt="Logo" className="logo" />
-</div>
+        <img src={logo} alt="Logo" className="logo" />
+      </div>
       <div className="login-container">
         <h1>Login Aeropuerto</h1>
         <form onSubmit={handleLogin}>
@@ -45,7 +116,10 @@ export default function Login() {
             />
             <label htmlFor="rememberMe">Recordar correo</label>
           </div>
-          <button type="submit">Iniciar Sesión</button>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Ingresando...' : 'Iniciar Sesión'}
+          </button>
+          {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
         </form>
       </div>
     </>

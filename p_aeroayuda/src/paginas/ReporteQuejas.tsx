@@ -1,7 +1,7 @@
 // src/modules/quejas/ReporteQuejas.tsx
 
 import React, { useEffect, useState } from 'react';
-import './ReporteQuejas.css';
+import '../styles/ReporteQuejas.css';
 
 type Queja = {
   id: number;
