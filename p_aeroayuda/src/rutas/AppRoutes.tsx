@@ -3,11 +3,13 @@ import { Routes, Route } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../paginas/Dashboard";
 import ControlSeguridad from "../paginas/ControlSeguridad";
-import Quejas from "../paginas/Quejas";
+import Quejas from "../paginas/FormQuejas";
 import CheckIn from "../paginas/Checkin";
 import Login from "../paginas/Login";
 import ClasificacionRegistro from "../paginas/ClasificacionRegistro";
 import React from "react";
+import ReporteQuejas from "../paginas/ReporteQuejas"; 
+
 
 export default function AppRoutes() {
   return (
@@ -22,6 +24,7 @@ export default function AppRoutes() {
         <Route path="/paginas/Checkin" element={<CheckIn />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="paginas/ClasificacionRegistro" element={<ClasificacionRegistro />} />
+        <Route path="/quejas/ReporteQuejas" element={<ReporteQuejas />} />
       </Route>
     </Routes>
   );

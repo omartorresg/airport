@@ -1,29 +1,73 @@
 .reporte-container {
-    padding: 20px;
-    max-width: 700px;
-    margin: auto;
-    background-color: #f0f8ff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #ccc;
-  }
-  
-  .reporte-cuadro {
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-  }
-  
-  .reporte-cuadro ul {
-    list-style: none;
-    padding-left: 0;
-  }
-  
-  .reporte-cuadro li {
-    margin-bottom: 5px;
-  }
-  
-  h2 {
-    text-align: center;
-    color: #333;
-  }
-  
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.reporte-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+  border-bottom: 2px solid #0077cc;
+  padding-bottom: 0.5rem;
+}
+
+.filtro-container {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.filtro-container select,
+.filtro-container input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.filtro-container button {
+  padding: 0.5rem 1rem;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.filtro-container button:hover {
+  background-color: #005fa3;
+}
+
+.resultado-container {
+  margin-top: 1.5rem;
+}
+
+.resultado-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.resultado-container th,
+.resultado-container td {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.resultado-container th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.resultado-container tr:hover {
+  background-color: #f9f9f9;
+}

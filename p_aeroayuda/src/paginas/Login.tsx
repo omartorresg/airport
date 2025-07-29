@@ -13,7 +13,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Recuperar email guardado (si aplica)
   useEffect(() => {
     const recordado = localStorage.getItem('emailRecordado');
     if (recordado) {
@@ -28,17 +27,30 @@ export default function Login() {
     setLoading(true);
 
     // 1. Buscar usuario + rol
-    const { data: user, error: fetchError } = await supabase
-      .from('usuarios_login')
-      .select('*, roles (nombre_rol)')
-      .eq('email', email)
-      .single();
+    console.log("Email ingresado:", email);
+   const { data: user, error: fetchError } = await supabase
+     .from('usuarios_login')
+    .select('*') // o 'email, password_hash, estado, id_rol'
+    .eq('email', email)
+    .single();
 
     if (fetchError || !user) {
       setError('Correo no encontrado');
       setLoading(false);
       return;
     }
+
+
+    //ver que rol tiene el usuario
+    const { data: rolData, error: rolError } = await supabase
+      .from('roles')
+      .select('nombre_rol')
+      .eq('id_rol', user.id_rol)
+      .single();
+    
+      const Rol = rolData?.nombre_rol?.toLowerCase();
+      console.log("Rol obtenido2:", Rol);
+
 
     // 2. Verificar contraseña
     const passwordOk = await bcrypt.compare(password, user.password_hash);
@@ -63,14 +75,14 @@ export default function Login() {
     }
 
     // 4. Redirección dinámica según nombre del rol
-    const nombreRol = user.roles?.nombre_rol?.toLowerCase();
+    console.log("Rol obtenido:", Rol);
 
-    switch (nombreRol) {
+    switch (Rol) {
       case 'administrador':
-        navigate('/admin');
+        navigate('/paginas/ControlSeguridad');
         break;
       case 'seguridad':
-        navigate('/paginas/ControlSeguridad');
+        navigate('/ControlSeguridad');
         break;
       case 'atencion':
         navigate('/paginas/AtencionUsuario');
@@ -79,7 +91,7 @@ export default function Login() {
         navigate('/paginas/GestionEmergencias');
         break;
       default:
-        navigate('/'); // ruta por defecto
+        navigate('/Checkin');
     }
 
     setLoading(false);
