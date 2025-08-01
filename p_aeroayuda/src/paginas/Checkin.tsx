@@ -3,6 +3,7 @@ import { Input } from "../componentes/ui/input";
 import { Button } from "../componentes/ui/button";
 import { Card, CardContent } from "../componentes/ui/card";
 import "../styles/checkin.css";
+import { supabase } from '../SupabaseClient';
 
 interface Pasajero {
   id: string;
@@ -17,14 +18,40 @@ export default function CheckIn() {
   const [pasajero, setPasajero] = useState<Pasajero | null>(null);
   const [asiento, setAsiento] = useState("");
 
-  const buscarPasajero = () => {
+  const buscarPasajero = async () => {
+    const { data: reservas, error } = await supabase
+      .from("reserva")
+      .select(`
+        id_reserva,
+        codigo_reserva,
+        pasajero (
+          id_pasajero,
+          persona (
+            nombre,
+            apellido,
+            tipo_documento,
+            numero_documento
+          )
+        )
+      `)
+      .eq("codigo_reserva", codigo)
+      .single();
+  
+    if (error || !reservas || !reservas.pasajero) {
+      alert("Reserva no encontrada.");
+      return;
+    }
+  
+    const persona = reservas.pasajero[0]?.persona[0];
+
     setPasajero({
-      id: "AB123",
-      nombre: "Juan Pérez",
-      documento: "123456789",
-      checkInConfirmado: false,
+      id: reservas.id_reserva.toString(),
+      nombre: `${persona.nombre} ${persona.apellido}`,
+      documento: `${persona.tipo_documento}: ${persona.numero_documento}`,
+      checkInConfirmado: false, // puedes consultar si ya está hecho
     });
   };
+  
 
   const confirmarCheckIn = () => {
     if (pasajero) {
