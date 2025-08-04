@@ -8,10 +8,15 @@ import gestionPersonalIcon from "../assets/icons/gestionPersonal.svg";
 import notificacionIcon from "../assets/icons/notificacion.svg";
 import quejasIcon from "../assets/icons/quejas.svg";
 import securityIcon from "../assets/icons/security.svg";
+import dashboardIcon from "../assets/icons/dashboard.svg";
 import Quejas from "../componentes/FormQueja";
 
 
-export const menuItems: MenuItem[] = [
+export const menuItems: MenuItem[] = [{
+    label: "Tablero Operativo",
+    icon: dashboardIcon,
+    path: "/paginas/Tablero",
+  },
   {
     label: "Migración y Aduanas",
     icon: aduanasIcon,
@@ -59,8 +64,8 @@ export const menuItems: MenuItem[] = [
     path: "/emergencia",
     subItems: [
       { label: "Clasificación y Registro", path: "/paginas/ClasificacionRegistro" },
-      { label: "Activación de Protocolo", path: "/emergencia/protocolo" },
-      { label: "Asignación de Roles", path: "/emergencia/roles" },
+      { label: "Activación de Protocolo", path: "/paginas/Protocolo" },
+      { label: "Asignación de Roles", path: "/paginas/AsignacionRoles" },
       { label: "Comunicación y Coordinación", path: "/emergencia/comunicacion" },
       { label: "Evacuación y Flujo", path: "/emergencia/evacuacion" },
       { label: "Notificación a Entidades", path: "/emergencia/notificacion" },

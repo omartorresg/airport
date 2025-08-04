@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-size: cover;
+}
+
+.titulo-tablero {
+  text-align: center;
+  font-size: 18px;
+transform: translateX(150px);
+  color: white;
+  font-weight: bold;
+  border-bottom: 4px solid #008cff;
+  padding-bottom: 0px;
+  width: fit-content;
+  margin-left: 550px;
+  margin-top: 30px;
+}
+
+.titulo-tablero h1 {
+  margin-bottom: 10px;
+  line-height: 1.1;
+}
+
+.contenedor {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 10px 40px 20px 40px; 
+  box-sizing: border-box;
+  margin-top: 40px;
+}
+
+.contenedor-tablero {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
+  width: 800px;
+  box-sizing: border-box;
+margin-right: 500px;
+}
+
+.contenedor-estadisticas{
+  display: flex;
+  flex-direction: row;
+  gap: 150px;
+}
+
+.dashboard-card {
+  background-color: #e9e9e9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.dashboard-card.animate:hover {
+  transform: scale(1.02);
+}
+
+.etiqueta {
+  display: inline-block;
+  border-bottom: 2px solid #7ea0bb;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #1576c6;
+}

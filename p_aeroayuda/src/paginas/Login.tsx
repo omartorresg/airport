@@ -59,7 +59,7 @@ export default function Login() {
   }
 
   // 🔁 Redirección única:
-  navigate('/paginas/ControlSeguridad');
+  navigate('/paginas/Tablero');
 
   setLoading(false);
 };

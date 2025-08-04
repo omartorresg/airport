@@ -1,11 +1,13 @@
 // rutas/AppRoutes.tsx
 import { Routes, Route } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout";
-import Dashboard from "../paginas/Dashboard";
 import ControlSeguridad from "../paginas/ControlSeguridad";
 import Quejas from "../paginas/FormQuejas";
 import CheckIn from "../paginas/Checkin";
 import Login from "../paginas/Login";
+import Tablero from "../paginas/Tablero";
+import Protocolo from "../paginas/Protocolo";
+import AsignacionRoles from "../paginas/AsignacionRoles";
 import ClasificacionRegistro from "../paginas/ClasificacionRegistro";
 import React from "react";
 import ReporteQuejas from "../paginas/ReporteQuejas"; 
@@ -25,10 +27,13 @@ export default function AppRoutes() {
       {/* RUTAS CON LAYOUT */}
       <Route path="/" element={<DashboardLayout />}>
         <Route path="/paginas/ControlSeguridad" element={<ControlSeguridad />} />
+        <Route path="/paginas/Tablero" element={<Tablero />} />
         <Route path="/paginas/Quejas" element={<Quejas />} />
         <Route path="/paginas/Checkin" element={<CheckIn />} />
-        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="/paginas/Checkin" element={<CheckIn />} />
+        <Route path="/paginas/AsignacionRoles" element={<AsignacionRoles />} />
         <Route path="paginas/ClasificacionRegistro" element={<ClasificacionRegistro />} />
+        <Route path="paginas/Protocolo" element={<Protocolo />} />
         <Route path="/quejas/ReporteQuejas" element={<ReporteQuejas />} />
         <Route path="/paginas/RegistroMaleta" element={<RegistroMaleta />} />
         <Route path="/paginas/AsignacionAsiento" element={<AsignarAsiento />} />

@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-size: cover;
+}
+
+.titulo-protocolo {
+  text-align: center;
+  font-size: 18px;
+  margin-left: 550px;
+  color: white;
+  font-weight: bold;
+  border-bottom: 4px solid #008cff;
+  padding-bottom: 0px;
+  width: fit-content;
+  margin-top: 40px;
+}
+
+.titulo-protocolo h1 {
+  margin-bottom: 10px;
+  line-height: 1.1;
+}
+
+.contenedor {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 10px 40px 20px 40px;
+  box-sizing: border-box;
+  margin-left: 500px;
+  gap: 0px;
+  transform: translateX(250px);
+}
+
+.contenedor-protocolo {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
+  max-width: 400px;
+  box-sizing: border-box;
+  margin-top: 80px;
+  margin-left: 0px;
+}
+
+.dashboard-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.dashboard-card.animate:hover {
+  transform: scale(1.02);
+}
+
+.etiqueta {
+  display: inline-block;
+  border-bottom: 2px solid #7ea0bb;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #1576c6;
+}
+
+.consulta-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  max-height: 510px;
+  box-sizing: border-box;
+  margin-top: 70px;
+  margin-left: 0;
+}
+
+.subtitulo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1576c6;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.boton-verificar {
+  padding: 10px 50px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #1576c6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  height: fit-content;
+  align-self: center;
+}
+
+.resultado-ok {
+  color: green;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.contenedor-protocolo p,
+.contenedor-protocolo button,
+.contenedor-protocolo .resultado-ok {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
