@@ -9,6 +9,11 @@ import Login from "../paginas/Login";
 import ClasificacionRegistro from "../paginas/ClasificacionRegistro";
 import React from "react";
 import ReporteQuejas from "../paginas/ReporteQuejas"; 
+import RegistroMaleta from "../paginas/RegistroMaleta";
+import AsignarAsiento from "../paginas/AsignacionAsiento";
+import GeneracionPase from "../paginas/GeneracionPaseAbordaje"
+import PanelQuejas from "../paginas/PanelPrioridadQuejas"
+import DisponibilidadPersonal from "../paginas/DisponibilidadPersonal"
 
 
 export default function AppRoutes() {
@@ -25,6 +30,11 @@ export default function AppRoutes() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="paginas/ClasificacionRegistro" element={<ClasificacionRegistro />} />
         <Route path="/quejas/ReporteQuejas" element={<ReporteQuejas />} />
+        <Route path="/paginas/RegistroMaleta" element={<RegistroMaleta />} />
+        <Route path="/paginas/AsignacionAsiento" element={<AsignarAsiento />} />
+        <Route path="/paginas/GeneracionPaseAbordaje" element={<GeneracionPase />} />
+        <Route path="/paginas/PanelPrioridadQuejas" element={<PanelQuejas />} />
+        <Route path="/paginas/DisponibilidadPersonal" element={<DisponibilidadPersonal />} />
       </Route>
     </Routes>
   );

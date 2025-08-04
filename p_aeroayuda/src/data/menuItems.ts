@@ -32,9 +32,9 @@ export const menuItems: MenuItem[] = [
     path: "/checkin",
     subItems: [
       { label: "Verificación de Reserva", path: "/paginas/Checkin" },
-      { label: "Asignación de Asiento", path: "/checkin/asiento" },
-      { label: "Registro de Equipaje", path: "/checkin/equipaje" },
-      { label: "Generación del Pase de Abordaje", path: "/checkin/pase" },
+      { label: "Asignación de Asiento", path: "/paginas/AsignacionAsiento" },
+      { label: "Registro de Equipaje", path: "/paginas/RegistroMaleta" },
+      { label: "Generación del Pase de Abordaje", path: "/paginas/GeneracionPaseAbordaje" },
       { label: "Actualización del Estado del Pasajero", path: "/checkin/estado" },
       { label: "Notificación al Sistema de Embarque", path: "/checkin/notificacion" },
     ],
@@ -96,8 +96,8 @@ export const menuItems: MenuItem[] = [
     path: "/quejas",
     subItems: [
       { label: "Creación y Asignación", path: "/paginas/Quejas" },
-      { label: "Niveles de Prioridad", path: "/quejas/prioridad" },
-      { label: "Disponibilidad de Personal", path: "/quejas/disponibilidad" },
+      { label: "Niveles de Prioridad", path: "/paginas/PanelPrioridadQuejas" },
+      { label: "Disponibilidad de Personal", path: "/paginas/DisponibilidadPersonal" },
       { label: "Matriz de Escalabilidad", path: "/quejas/escalabilidad" },
       { label: "Notificación de Estatus", path: "/quejas/estatus" },
       { label: "Seguimiento y Feedback", path: "/quejas/seguimiento" },

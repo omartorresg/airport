@@ -1,0 +1,40 @@
+.asignar-asiento-container {
+    background-color: #f3faff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 350px;
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .asignar-asiento-container h2 {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .asignar-asiento-container label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .asignar-asiento-container input,
+  .asignar-asiento-container select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+  
+  .asignar-asiento-container button {
+    margin-top: 15px;
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
