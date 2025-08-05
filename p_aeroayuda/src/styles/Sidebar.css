@@ -84,6 +84,7 @@ margin-bottom: 40px;
   line-height: 1;
   padding: 0 16px;
   color: rgb(255 255 255 / 95%);
+  background-color: transparent;
 }
 
 .sidebar button p:nth-child(2) {

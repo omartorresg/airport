@@ -7,6 +7,7 @@ import CheckIn from "../paginas/Checkin";
 import Login from "../paginas/Login";
 import Tablero from "../paginas/Tablero";
 import Protocolo from "../paginas/Protocolo";
+import Comunicacion from "../paginas/Comunicacion";
 import AsignacionRoles from "../paginas/AsignacionRoles";
 import ClasificacionRegistro from "../paginas/ClasificacionRegistro";
 import React from "react";
@@ -34,6 +35,7 @@ export default function AppRoutes() {
         <Route path="/paginas/AsignacionRoles" element={<AsignacionRoles />} />
         <Route path="paginas/ClasificacionRegistro" element={<ClasificacionRegistro />} />
         <Route path="paginas/Protocolo" element={<Protocolo />} />
+        <Route path="paginas/Comunicacion" element={<Comunicacion />} />
         <Route path="/quejas/ReporteQuejas" element={<ReporteQuejas />} />
         <Route path="/paginas/RegistroMaleta" element={<RegistroMaleta />} />
         <Route path="/paginas/AsignacionAsiento" element={<AsignarAsiento />} />

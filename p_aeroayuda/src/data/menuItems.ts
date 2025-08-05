@@ -66,7 +66,7 @@ export const menuItems: MenuItem[] = [{
       { label: "Clasificación y Registro", path: "/paginas/ClasificacionRegistro" },
       { label: "Activación de Protocolo", path: "/paginas/Protocolo" },
       { label: "Asignación de Roles", path: "/paginas/AsignacionRoles" },
-      { label: "Comunicación y Coordinación", path: "/emergencia/comunicacion" },
+      { label: "Comunicación y Coordinación", path: "/paginas/Comunicacion" },
       { label: "Evacuación y Flujo", path: "/emergencia/evacuacion" },
       { label: "Notificación a Entidades", path: "/emergencia/notificacion" },
       { label: "Bitácora y Simulacros", path: "/emergencia/bitacora" },
