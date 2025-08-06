@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/comunicacion.css';
-import mapa from '../assets/mapa_aeropuerto.png';
+
 
 const ComunicacionEmergencia = () => {
   const [mensajes, setMensajes] = useState([
@@ -20,10 +20,10 @@ const ComunicacionEmergencia = () => {
   return (
     <div className="contenedor-comunicacion">
       <h1 className="titulo-comunicacion">Comunicación en Emergencia</h1>
-
+{/*
       <div className="mapa-contenedor">
         <img src={mapa} alt="Mapa del aeropuerto" className="mapa-img" />
-      </div>
+      </div>    */}
 
       <div className="chat-contenedor">
         <div className="chat-mensajes">

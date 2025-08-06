@@ -5,48 +5,42 @@ body {
   background-size: cover;
 }
 
+
+.contenedor {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  margin-top: 15px;
+}
+
+.contenedor-tablero {
+  width: 800px;
+  margin-left: calc(34%); /* 125px es la mitad del sidebar */
+  transform: translateX(-50%);
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
 .titulo-tablero {
   text-align: center;
   font-size: 18px;
-transform: translateX(150px);
   color: white;
   font-weight: bold;
   border-bottom: 4px solid #008cff;
   padding-bottom: 0px;
   width: fit-content;
-  margin-left: 550px;
-  margin-top: 30px;
+  margin: 30px auto 0 auto; /* Centrado */
+  transform: none;
 }
 
-.titulo-tablero h1 {
-  margin-bottom: 10px;
-  line-height: 1.1;
-}
 
-.contenedor {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 10px 40px 20px 40px; 
-  box-sizing: border-box;
-  margin-top: 40px;
-}
-
-.contenedor-tablero {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  padding: 30px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
-  width: 800px;
-  box-sizing: border-box;
-margin-right: 500px;
-}
-
-.contenedor-estadisticas{
+.contenedor-estadisticas {
   display: flex;
   flex-direction: row;
   gap: 150px;
