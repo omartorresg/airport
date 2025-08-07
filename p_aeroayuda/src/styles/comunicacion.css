@@ -1,28 +1,126 @@
-.mapa-imagen {
-  width: 100%;
-  height: 350px;
-  background-image: url('/mapa_aeropuerto.png'); /* Coloca la imagen en /public */
-  background-size: cover;
-  background-position: center;
-  position: relative;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f3f6fc;
+}
+
+.comunicacion-titulo {
+   text-align: center;
+  font-size: 35px;
+
+  color: white;
+  font-weight: bold;
+  border-bottom: 4px solid #008cff;
+  padding-bottom: 0px;
+  width: fit-content;
+  margin-top: 30px;
+  margin-left: 600px;
+  
+}
+
+.panel-mapa {
+  background-color: white;
   border-radius: 10px;
-  cursor: crosshair;
-  box-shadow: 0 2px 10px rgba(0, 140, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
+  padding: 20px;
+  width: 610px; /* Aumenta este valor según lo necesites */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.marcador {
-  width: 18px;
-  height: 18px;
-  background-color: red;
-  border: 2px solid white;
-  border-radius: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
+
+.comunicacion-container {
+  padding: 30px;
 }
 
-.coordenadas {
-  margin-top: 12px;
-  font-size: 14px;
+.comunicacion-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  margin-left: 250px;
+}
+
+.panel {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.15);
+  padding: 20px;
+ 
+}
+
+.panel h3 {
+  margin-top: 0;
   color: #1576c6;
-  text-align: center;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.imagen-mapa {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.chat-mensajes {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-bottom: 15px;
+}
+
+.chat-mensaje {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 90%;
+}
+
+.chat-mensaje.usuario {
+  background-color: #e1efff;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.chat-mensaje.operador {
+  background-color: #d9f7e4;
+  text-align: left;
+}
+
+.chat-input-container {
+  display: flex;
+  gap: 10px;
+}
+
+.input-chat {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #b5b5b5;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.boton-enviar {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #1576c6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boton-enviar:hover {
+  background-color: #0d5ea4;
 }

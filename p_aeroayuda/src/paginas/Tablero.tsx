@@ -78,7 +78,7 @@ const Tablero = () => {
     <> <div className="titulo-tablero">
         <h1>Dashboard Operativo</h1>
       </div>
-    <div className="contenedor">
+    <div className="contenedor-table">
 
       <div className="contenedor-tablero">
         <div className='contenedor-estadisticas'>

@@ -79,7 +79,7 @@ const Protocolo = () => {
         <h1>Activación de Protocolo de Emergencia</h1>
       </div>
 
-      <div className="contenedor">
+      <div className="contenedor-proto">
         {/* Consulta Emergencias */}
         <div className="consulta-container">
           <h2>Emergencias Registradas</h2>

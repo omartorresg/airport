@@ -8,7 +8,7 @@ body {
 .titulo-asignacion {
   text-align: center;
   font-size: 18px;
-  margin-left: 700px; /* empuja el título visualmente al centro derecho */
+  margin-left: 600px; /* empuja el título visualmente al centro derecho */
   color: white;
   font-weight: bold;
   border-bottom: 4px solid #008cff;
@@ -21,16 +21,16 @@ body {
   line-height: 1.1;
 }
 
-.contenedor {
+.contenedor-asig {
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
   min-height: 100vh;
   padding: 40px 60px 40px 60px; /* controla espacio interior */
   box-sizing: border-box;
-  width: 100%;
+ 
   overflow-x: hidden; /* previene scroll lateral si algo se desborda */
-  
+   margin-right: 300px;
 }
 
 .contenedor-asignacion {
@@ -44,7 +44,7 @@ body {
   width: 600px;
   box-sizing: border-box;
   margin-top: 30px;
-  margin-left: 300px;
+ 
 }
 
 

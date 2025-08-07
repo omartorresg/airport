@@ -1,0 +1,18 @@
+.icono-alerta-fijo {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  z-index: 1000;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icono-alerta-fijo:hover {
+  transform: scale(1.1);
+}

@@ -23,7 +23,7 @@ transform: translateX(150px);
   line-height: 1.1;
 }
 
-.contenedor {
+.contenedor-table {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -31,6 +31,7 @@ transform: translateX(150px);
   padding: 10px 40px 20px 40px; 
   box-sizing: border-box;
   margin-top: 40px;
+  margin-left: 450px;
 }
 
 .contenedor-tablero {
@@ -41,9 +42,9 @@ transform: translateX(150px);
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
-  width: 800px;
+  width: auto;
   box-sizing: border-box;
-margin-right: 500px;
+
 }
 
 .contenedor-estadisticas{
