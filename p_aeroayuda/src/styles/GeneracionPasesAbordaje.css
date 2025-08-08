@@ -1,23 +1,51 @@
+.pagina-pase {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* ahora se centra verticalmente también */
+  min-height: 100vh;
+  margin-left: 250px; /* espacio del sidebar */
+  background-color: #f44336; /* o tu fondo rojo degradado */
+}
+
 .pase-abordaje-container {
-    padding: 20px;
-    background: #f5fbff;
-    border-radius: 10px;
-    width: 400px;
-    margin: auto;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-  }
-  
-  .pase-abordaje-container h2 {
-    text-align: center;
-  }
-  
-  .pase-abordaje-container input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    margin-top: 15px;
-  }
+  padding: 20px;
+  background: #f5fbff;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pase-abordaje-container input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 15px;
+}
+
+.pase-abordaje-container button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #0066cc;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.pase {
+  background-color: #fff;
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.pase p {
+  margin: 5px 0;
+}
+
   
   .pase-abordaje-container button {
     margin-top: 10px;

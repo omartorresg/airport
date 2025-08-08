@@ -1,30 +1,50 @@
-import React, { useState } from 'react';
-import { supabase } from '../SupabaseClient'; // Ajusta la ruta según tu estructura
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../SupabaseClient';
 import '../styles/RegistroMaleta.css';
 
 export default function RegistroEquipaje() {
   const [formData, setFormData] = useState({
     idPasajero: '',
-    pesoTotal: '',
-    cantidad: '',
+    cantidad: '1',
     estado: '',
   });
 
+  const [pesos, setPesos] = useState<string[]>(['']);
   const [mensaje, setMensaje] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    if (e.target.name === 'cantidad') {
+      const cantidad = parseInt(e.target.value);
+      if (!isNaN(cantidad) && cantidad > 0) {
+        const nuevosPesos = Array.from({ length: cantidad }, (_, i) => pesos[i] || '');
+        setPesos(nuevosPesos);
+      }
+    }
+  };
+
+  const handlePesoChange = (index: number, value: string) => {
+    const nuevosPesos = [...pesos];
+    nuevosPesos[index] = value;
+    setPesos(nuevosPesos);
+  };
+
+  const calcularPesoTotal = () => {
+    return pesos.reduce((total, peso) => total + (parseFloat(peso) || 0), 0);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { idPasajero, pesoTotal, cantidad, estado } = formData;
+    const pesoTotal = calcularPesoTotal();
+
+    const { idPasajero, cantidad, estado } = formData;
 
     const { error } = await supabase.from('equipaje').insert([
       {
         id_pasajero: parseInt(idPasajero),
-        peso_total: parseFloat(pesoTotal),
+        peso_total: pesoTotal,
         cantidad: parseInt(cantidad),
         estado: estado,
       },
@@ -37,10 +57,10 @@ export default function RegistroEquipaje() {
       setMensaje('✅ Equipaje registrado con éxito');
       setFormData({
         idPasajero: '',
-        pesoTotal: '',
-        cantidad: '',
+        cantidad: '1',
         estado: '',
       });
+      setPesos(['']);
     }
   };
 
@@ -49,13 +69,53 @@ export default function RegistroEquipaje() {
       <h2>Registro de Equipaje</h2>
       <form onSubmit={handleSubmit}>
         <label>ID Pasajero:</label>
-        <input type="number" name="idPasajero" value={formData.idPasajero} onChange={handleChange} required />
-
-        <label>Peso Total (kg):</label>
-        <input type="number" name="pesoTotal" step="0.01" value={formData.pesoTotal} onChange={handleChange} required />
+        <input
+          type="number"
+          name="idPasajero"
+          value={formData.idPasajero}
+          onChange={handleChange}
+          required
+        />
 
         <label>Cantidad de Maletas:</label>
-        <input type="number" name="cantidad" value={formData.cantidad} onChange={handleChange} required />
+        <input
+          type="number"
+          name="cantidad"
+          min="1"
+          value={formData.cantidad}
+          onChange={handleChange}
+          required
+        />
+
+        {parseInt(formData.cantidad) > 1 ? (
+          <>
+            <label>Peso por Maleta (kg):</label>
+            {pesos.map((peso, index) => (
+              <input
+                key={index}
+                type="number"
+                step="0.01"
+                placeholder={`Maleta ${index + 1}`}
+                value={peso}
+                onChange={(e) => handlePesoChange(index, e.target.value)}
+                required
+              />
+            ))}
+            <p className="peso-total">Peso Total: {calcularPesoTotal()} kg</p>
+          </>
+        ) : (
+          <>
+            <label>Peso Total (kg):</label>
+            <input
+              type="number"
+              step="0.01"
+              placeholder="Peso"
+              value={pesos[0] || ''}
+              onChange={(e) => handlePesoChange(0, e.target.value)}
+              required
+            />
+          </>
+        )}
 
         <label>Estado:</label>
         <select name="estado" value={formData.estado} onChange={handleChange} required>

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import '../styles/comunicacion.css';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 80c6c09afc8a1000a0c604116c85930d22220836
 
 const ComunicacionEmergencia = () => {
   const [mensajes, setMensajes] = useState([
@@ -27,6 +31,7 @@ const ComunicacionEmergencia = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="comunicacion-container">
       <h1 className="comunicacion-titulo">Comunicación en Emergencia</h1>
 
@@ -38,6 +43,32 @@ const ComunicacionEmergencia = () => {
             alt="Mapa del aeropuerto"
             className="imagen-mapa"
             onClick={manejarClickMapa}
+=======
+    <div className="contenedor-comunicacion">
+      <h1 className="titulo-comunicacion">Comunicación en Emergencia</h1>
+{/*
+      <div className="mapa-contenedor">
+        <img src={mapa} alt="Mapa del aeropuerto" className="mapa-img" />
+      </div>    */}
+
+      <div className="chat-contenedor">
+        <div className="chat-mensajes">
+          {mensajes.map((msg, index) => (
+            <div
+              key={index}
+              className={`mensaje ${msg.autor === 'Usuario' ? 'mensaje-usuario' : 'mensaje-operador'}`}
+            >
+              <strong>{msg.autor}:</strong> {msg.texto}
+            </div>
+          ))}
+        </div>
+        <div className="chat-input">
+          <input
+            type="text"
+            placeholder="Escriba su mensaje..."
+            value={nuevoMensaje}
+            onChange={(e) => setNuevoMensaje(e.target.value)}
+>>>>>>> 80c6c09afc8a1000a0c604116c85930d22220836
           />
         </div>
 
