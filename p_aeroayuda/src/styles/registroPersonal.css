@@ -1,0 +1,93 @@
+/* Reutiliza tu estilo base: .contenedor-clasi, .contenedor-clasificacion, .subtitulo,
+   .etiqueta, .input-clasificacion, .boton-verificar, .resultado-ok, etc. */
+
+/* Panel genérico */
+.panel {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.15);
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.panel-contacto h3 {
+  margin: 0 0 10px 0;
+  color: #1576c6;
+}
+
+/* Filas de contacto (emails / teléfonos) */
+.fila-contacto {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.chk {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.btn-mini {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-mini.agregar {
+  background-color: #e6f0ff;
+  color: #1576c6;
+  margin-top: 6px;
+}
+
+.btn-mini.eliminar {
+  background-color: #ffe6e6;
+  color: #b43333;
+}
+
+.registrar-personal .input-clasificacion {
+  width: 100%;
+}
+
+/* Mostrar/ocultar contraseña */
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.password-container input {
+  flex: 1;
+  padding-right: 40px; /* espacio para el botón */
+}
+
+.mostrar-pass {
+  display: inline-flex;           /* inline para que no ocupe todo el ancho */
+  align-items: center;
+  vertical-align: middle;
+  margin-top: 11px;
+}
+
+.mostrar-pass input[type="checkbox"] {
+  margin: 0;
+  line-height: 1;                 /* evita saltos raros */
+}
+
+.mostrar-pass__texto {
+  display: inline-block;
+  margin-left: 5px;              /* ← espacio claro entre check y texto */
+  line-height: 1;                 /* alinea con el checkbox */
+}
+
+
+/* Responsive */
+@media (max-width: 720px) {
+  .fila-contacto {
+    grid-template-columns: 1fr;
+  }
+}

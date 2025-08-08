@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+/* --- Base --- */
 body {
   margin: 0;
   padding: 0;
@@ -6,41 +6,20 @@ body {
   background-color: #f3f6fc;
 }
 
+/* --- Título --- */
 .comunicacion-titulo {
-   text-align: center;
+  text-align: center;
   font-size: 35px;
-
   color: white;
   font-weight: bold;
   border-bottom: 4px solid #008cff;
-  padding-bottom: 0px;
   width: fit-content;
+  padding-bottom: 0;
   margin-top: 30px;
-  margin-left: 600px;
-  
+  margin-left: 600px; /* ajusta si quieres centrar distinto */
 }
 
-.panel-mapa {
-  background-color: white;
-=======
-.mapa-imagen {
-  width: 100%;
-  height: 350px;
-
-  background-size: cover;
-  background-position: center;
-  position: relative;
->>>>>>> 80c6c09afc8a1000a0c604116c85930d22220836
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
-  padding: 20px;
-  width: 610px; /* Aumenta este valor según lo necesites */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-
+/* --- Contenedores --- */
 .comunicacion-container {
   padding: 30px;
 }
@@ -55,12 +34,12 @@ body {
   margin-left: 250px;
 }
 
+/* --- Panel genérico --- */
 .panel {
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 140, 255, 0.15);
   padding: 20px;
- 
 }
 
 .panel h3 {
@@ -70,12 +49,31 @@ body {
   margin-bottom: 15px;
 }
 
-.imagen-mapa {
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+/* --- Panel del mapa --- */
+.panel-mapa {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.3);
+  padding: 20px;
+  width: 610px;               /* puedes aumentar a 700/800 si quieres */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;          /* útil si luego agregas un marcador absoluto */
 }
 
+/* Imagen del mapa dentro del panel */
+.imagen-mapa {
+  width: 100%;
+  height: 350px;               /* del bloque “mapa-imagen” */
+  object-fit: contain;         /* muestra todo el mapa sin recortar */
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-size: cover;      /* si usas background-image en algún momento */
+  background-position: center;
+}
+
+/* --- Chat --- */
 .chat-mensajes {
   height: 300px;
   overflow-y: auto;
@@ -84,53 +82,4 @@ body {
   border-radius: 8px;
   background-color: #f9f9f9;
   margin-bottom: 15px;
-}
-
-.chat-mensaje {
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  line-height: 1.4;
-  max-width: 90%;
-}
-
-.chat-mensaje.usuario {
-  background-color: #e1efff;
-  align-self: flex-end;
-  text-align: right;
-}
-
-.chat-mensaje.operador {
-  background-color: #d9f7e4;
-  text-align: left;
-}
-
-.chat-input-container {
-  display: flex;
-  gap: 10px;
-}
-
-.input-chat {
-  flex: 1;
-  padding: 10px;
-  border: 2px solid #b5b5b5;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.boton-enviar {
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: bold;
-  background-color: #1576c6;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.boton-enviar:hover {
-  background-color: #0d5ea4;
 }

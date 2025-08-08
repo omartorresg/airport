@@ -7,6 +7,7 @@ import CheckIn from "../paginas/Checkin";
 import Login from "../paginas/Login";
 import Tablero from "../paginas/Tablero";
 import Protocolo from "../paginas/Protocolo";
+import RegistroPersonal from "../paginas/RegistroPersonal";
 import Comunicacion from "../paginas/Comunicacion";
 import AsignacionRoles from "../paginas/AsignacionRoles";
 import ClasificacionRegistro from "../paginas/ClasificacionRegistro";
@@ -23,15 +24,17 @@ export default function AppRoutes() {
   return (
     <Routes>
       {/* RUTA SIN LAYOUT: LOGIN */}
-      <Route index element={<Login />} />
-
+      
+ <Route index element={<Login />} />
       {/* RUTAS CON LAYOUT */}
       <Route path="/" element={<DashboardLayout />}>
         <Route path="/paginas/ControlSeguridad" element={<ControlSeguridad />} />
+       
         <Route path="/paginas/Tablero" element={<Tablero />} />
         <Route path="/paginas/Quejas" element={<Quejas />} />
         <Route path="/paginas/Checkin" element={<CheckIn />} />
         <Route path="/paginas/Checkin" element={<CheckIn />} />
+        <Route path="/paginas/RegistroPersonal" element={<RegistroPersonal />} />
         <Route path="/paginas/AsignacionRoles" element={<AsignacionRoles />} />
         <Route path="paginas/ClasificacionRegistro" element={<ClasificacionRegistro />} />
         <Route path="paginas/Protocolo" element={<Protocolo />} />

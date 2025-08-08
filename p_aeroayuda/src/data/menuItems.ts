@@ -77,7 +77,7 @@ export const menuItems: MenuItem[] = [{
     icon: gestionPersonalIcon,
     path: "/gestion",
     subItems: [
-      { label: "Registro de Personal", path: "/gestion/registro" },
+      { label: "Registro de Personal", path: "/paginas/RegistroPersonal" },
       { label: "Horarios y Turnos", path: "/gestion/turnos" },
       { label: "Asignación de Tareas", path: "/gestion/asignacion" },
       { label: "Capacitación y Certificación", path: "/gestion/capacitacion" },
