@@ -1,49 +1,74 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/comunicacion.css';
-import mapa from '../assets/mapa_aeropuerto.png';
 
 const ComunicacionEmergencia = () => {
   const [mensajes, setMensajes] = useState([
     { autor: 'Operador', texto: 'Ubique la emergencia en el mapa, por favor.' },
     { autor: 'Usuario', texto: 'Está ocurriendo cerca de la pista principal.' },
   ]);
-
   const [nuevoMensaje, setNuevoMensaje] = useState('');
+  const chatRef = useRef<HTMLDivElement>(null);
 
   const enviarMensaje = () => {
-    if (nuevoMensaje.trim() !== '') {
-      setMensajes([...mensajes, { autor: 'Usuario', texto: nuevoMensaje }]);
-      setNuevoMensaje('');
-    }
+    if (!nuevoMensaje.trim()) return;
+    setMensajes(prev => [...prev, { autor: 'Usuario', texto: nuevoMensaje }]);
+    setNuevoMensaje('');
   };
 
+  const manejarClickMapa = (e: React.MouseEvent<HTMLImageElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.round(((e.clientX - rect.left) / rect.width) * 100);
+    const y = Math.round(((e.clientY - rect.top) / rect.height) * 100);
+    setNuevoMensaje(`📍 Emergencia marcada en coordenadas: X=${x}%, Y=${y}%`);
+  };
+
+  useEffect(() => {
+    if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight;
+  }, [mensajes]);
+
   return (
-    <div className="contenedor-comunicacion">
-      <h1 className="titulo-comunicacion">Comunicación en Emergencia</h1>
+    <div className="comunicacion-container">
+      <h1 className="comunicacion-titulo">Comunicación en Emergencia</h1>
 
-      <div className="mapa-contenedor">
-        <img src={mapa} alt="Mapa del aeropuerto" className="mapa-img" />
-      </div>
-
-      <div className="chat-contenedor">
-        <div className="chat-mensajes">
-          {mensajes.map((msg, index) => (
-            <div
-              key={index}
-              className={`mensaje ${msg.autor === 'Usuario' ? 'mensaje-usuario' : 'mensaje-operador'}`}
-            >
-              <strong>{msg.autor}:</strong> {msg.texto}
-            </div>
-          ))}
-        </div>
-        <div className="chat-input">
-          <input
-            type="text"
-            placeholder="Escriba su mensaje..."
-            value={nuevoMensaje}
-            onChange={(e) => setNuevoMensaje(e.target.value)}
+      <div className="comunicacion-content">
+        {/* Panel Mapa */}
+        <div className="panel panel-mapa">
+          <h3>Ubicación del Incidente</h3>
+          <img
+            src="/mapa_aeropuerto.png"
+            alt="Mapa del aeropuerto"
+            className="imagen-mapa"
+            onClick={manejarClickMapa}
           />
-          <button onClick={enviarMensaje}>Enviar</button>
+        </div>
+
+        {/* Panel Chat */}
+        <div className="panel panel-chat">
+          <h3>Chat de Coordinación</h3>
+
+          <div className="chat-mensajes" ref={chatRef}>
+            {mensajes.map((m, i) => (
+              <div
+                key={i}
+                className={`chat-mensaje ${m.autor === 'Usuario' ? 'usuario' : 'operador'}`}
+              >
+                <div className="chat-autor">{m.autor}</div>
+                <div className="chat-texto">{m.texto}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="chat-input-container">
+            <input
+              type="text"
+              className="input-chat"
+              placeholder="Escriba su mensaje..."
+              value={nuevoMensaje}
+              onChange={(e) => setNuevoMensaje(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && enviarMensaje()}
+            />
+            <button className="boton-enviar" onClick={enviarMensaje}>Enviar</button>
+          </div>
         </div>
       </div>
     </div>

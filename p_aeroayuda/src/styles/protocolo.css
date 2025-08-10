@@ -22,16 +22,16 @@ body {
   line-height: 1.1;
 }
 
-.contenedor {
+.contenedor-proto {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   min-height: 100vh;
   padding: 10px 40px 20px 40px;
   box-sizing: border-box;
-  margin-left: 500px;
-  gap: 0px;
-  transform: translateX(250px);
+  margin-left: 350px;
+  gap: 40px;
+
 }
 
 .contenedor-protocolo {

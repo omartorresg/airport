@@ -25,6 +25,7 @@ export default function PaseAbordaje() {
   };
 
   return (
+  <div className="pagina-pase">
     <div className="pase-abordaje-container">
       <h2>Generar Pase de Abordaje</h2>
       <input
@@ -32,12 +33,15 @@ export default function PaseAbordaje() {
         value={idTicket}
         onChange={(e) => setIdTicket(e.target.value)}
       />
-      <button onClick={buscarTicket}>Buscar</button>
+      <button onClick={buscarTicket}>Buscar y Generar</button>
 
       {boleto && (
         <div className="pase">
           <h3>Pase de Abordaje</h3>
-          <p>Pasajero: {boleto.pasajero.persona.nombre} {boleto.pasajero.persona.apellido}</p>
+          <p>
+            Pasajero: {boleto.pasajero.persona.nombre}{" "}
+            {boleto.pasajero.persona.apellido}
+          </p>
           <p>Origen: {boleto.vuelo.origen}</p>
           <p>Destino: {boleto.vuelo.destino}</p>
           <p>Hora Abordaje: {boleto.vuelo.hora_abordaje}</p>
@@ -45,5 +49,7 @@ export default function PaseAbordaje() {
         </div>
       )}
     </div>
-  );
+  </div>
+);
+
 }
