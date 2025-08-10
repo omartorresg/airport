@@ -20,7 +20,7 @@ body {
 }
 
 .emg-title-wrap {
- text-align: center;
+  text-align: center;
   font-size: 18px;
   margin-left: 550px;
   color: white;
@@ -32,12 +32,8 @@ body {
 }
 
 .emg-title {
-margin-bottom: 10px;
+  margin-bottom: 10px;
   line-height: 1.1;
-}
-
-.titulo-protocolo h1 {
-
 }
 
 .emg-grid {
@@ -64,6 +60,12 @@ margin-bottom: 10px;
   font-size: 20px;
 }
 
+/* Asegura que el h2 dentro del formulario ocupe toda la fila */
+.emg-form .emg-subtitle {
+  grid-column: 1 / -1;
+}
+
+
 .emg-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -85,6 +87,17 @@ margin-bottom: 10px;
   margin-bottom: 8px;
   font-weight: bold;
 }
+
+.emg-form label {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.emg-form label select {
+  height: 42px; /* igualamos la altura de ambos select */
+}
+
 
 .emg-input {
   width: 100%;
@@ -140,36 +153,39 @@ margin-bottom: 10px;
 }
 
 .emg-btn-primary {
-  background: var(--emg-azul);
-  color: #fff;
+  background-color: var(--azul) !important;
+  color:#fff !important;
+  border-color: transparent !important;
 }
 
 .emg-btn-primary:hover {
-  background: #0e5a99;
+background-color:#0e5a99 !important;   background: #0e5a99;
 }
 
 .emg-btn-secondary {
-  background: #e6f0ff;
-  color: var(--emg-azul);
-  border-color: var(--emg-azul);
+  background-color:#e6f0ff !important;
+  color:var(--azul) !important;
+  border-color: var(--azul) !important;
 }
 
 .emg-btn-danger {
-  background: #fee2e2;
-  color: #b91c1c;
-  border-color: #ef4444;
+  background-color:#fee2e2 !important;
+  color:#b91c1c !important;
+  border-color:#ef4444 !important;
 }
 
 .emg-btn-danger:hover {
-  background: #fecaca;
-  border-color: #dc2626;
+  background:#fecaca !important;
+  border-color:#dc2626 !important;
 }
 
 .emg-btn-ghost {
-  background: #f8fafc;
-  color: #334155;
-  border-color: #cbd5e1;
+ background-color:#f8fafc !important;
+  color:#334155 !important;
+  border-color:#cbd5e1 !important;
 }
+
+
 
 .emg-msg {
   grid-column: 1 / -1;
@@ -209,6 +225,42 @@ margin-bottom: 10px;
 .emg-row-selected {
   background: #e8f3ff;
 }
+/* ===== Scroll horizontal solo en el panel de consulta ===== */
+.emg-consulta {
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.emg-consulta .emg-table {
+  display: block;
+  overflow-x: auto; /* permite scroll horizontal */
+  overflow-y: auto; /* también mantiene scroll vertical si hay muchos registros */
+  max-height: 400px;
+  white-space: nowrap; /* evita que las celdas bajen de línea */
+}
+
+.emg-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.emg-table th,
+.emg-table td {
+  border: 1px solid var(--emg-borde);
+  padding: 10px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.emg-table th {
+  background: #f1f5f9;
+}
+
+.emg-row-selected {
+  background: #e8f3ff;
+}
+
 
 @media (max-width: 1100px) {
   .emg-grid {

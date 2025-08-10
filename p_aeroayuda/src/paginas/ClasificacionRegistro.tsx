@@ -99,7 +99,6 @@ export default function ClasificacionEmergencias() {
     setCoordenadas({ x, y });
   };
 
-  // Helpers
   const limpiar = () => {
     setTipoEmergencia('');
     setSeveridad('');
@@ -134,7 +133,7 @@ export default function ClasificacionEmergencias() {
       return;
     }
 
-    // Regla simple anti-duplicado: misma fecha_hora + ubicación + id_tipo + id_nivel
+    // Anti-duplicado (simple)
     const fecha_hora = `${fecha}T${hora}`;
     const { data: existe } = await supabase
       .from('emergencias')
@@ -168,7 +167,7 @@ export default function ClasificacionEmergencias() {
     limpiar();
   };
 
-  // Seleccionar de la tabla
+  // Seleccionar
   const seleccionarFila = (row: EmergenciaRow) => {
     setSeleccionId(row.id_emergencia);
     setTipoEmergencia(row.tipo_nombre);
@@ -197,7 +196,7 @@ export default function ClasificacionEmergencias() {
 
     const fecha_hora = `${fecha}T${hora}`;
 
-    // Evitar duplicar al editar (mismo criterio, exceptuando el propio ID)
+    // Evitar duplicar al editar
     const { data: dup } = await supabase
       .from('emergencias')
       .select('id_emergencia')
@@ -260,41 +259,29 @@ export default function ClasificacionEmergencias() {
         <form className="emg-card emg-form" onSubmit={(e) => { e.preventDefault(); registrar(); }}>
           <h2 className="emg-subtitle">Datos de la Emergencia</h2>
 
-          <label>
-            <span className="emg-label">Tipo de Emergencia</span>
-            <select className="emg-input" value={tipoEmergencia} onChange={(e) => setTipoEmergencia(e.target.value)}>
-              <option value="">Seleccione</option>
-              {tiposEmergenciaDB.map(t => (
-                <option key={t.id_tipo_emergencia} value={t.nombre}>{t.nombre}</option>
-              ))}
-            </select>
-          </label>
+          {/* Mismos niveles (misma fila) */}
+  <label>
+  <span className="emg-label">Tipo de Emergencia</span>
+  <select className="emg-input" value={tipoEmergencia} onChange={(e) => setTipoEmergencia(e.target.value)}>
+    <option value="">Seleccione</option>
+    {tiposEmergenciaDB.map(t => (
+      <option key={t.id_tipo_emergencia} value={t.nombre}>{t.nombre}</option>
+    ))}
+  </select>
+</label>
 
-          <label>
-            <span className="emg-label">Nivel de Severidad</span>
-            <select className="emg-input" value={severidad} onChange={(e) => setSeveridad(e.target.value)}>
-              <option value="">Seleccione</option>
-              {nivelesDB.map(n => (
-                <option key={n.id_nivel} value={n.nombre}>{n.nombre}</option>
-              ))}
-            </select>
-          </label>
+<label>
+  <span className="emg-label">Nivel de Severidad</span>
+  <select className="emg-input" value={severidad} onChange={(e) => setSeveridad(e.target.value)}>
+    <option value="">Seleccione</option>
+    {nivelesDB.map(n => (
+      <option key={n.id_nivel} value={n.nombre}>{n.nombre}</option>
+    ))}
+  </select>
+</label>
 
-          <label className="emg-col2">
-            <span className="emg-label">Descripción</span>
-            <textarea
-              className="emg-input"
-              rows={3}
-              value={descripcion}
-              onChange={(e) => setDescripcion(e.target.value)}
-              placeholder="Ej: Incendio cerca de la pista principal"
-            />
-          </label>
+         
 
-          <label>
-            <span className="emg-label">Fecha</span>
-            <input type="date" className="emg-input" value={fecha} onChange={(e) => setFecha(e.target.value)} />
-          </label>
 
           <label>
             <span className="emg-label">Hora</span>
@@ -336,57 +323,48 @@ export default function ClasificacionEmergencias() {
         </form>
 
         {/* Panel Consulta */}
-        <div className="emg-card emg-consulta">
-          <h2 className="emg-subtitle">Consulta / Selección</h2>
+       {/* Panel Consulta */}
+<div className="emg-card emg-consulta">
+  <h2 className="emg-subtitle">Consulta / Selección</h2>
 
-          <div className="emg-filters">
-            <select className="emg-input" value={filtro.tipo} onChange={(e)=>setFiltro(prev=>({...prev, tipo: e.target.value}))}>
-              <option value="">Tipo</option>
-              {tiposEmergenciaDB.map(t => <option key={t.id_tipo_emergencia} value={t.nombre}>{t.nombre}</option>)}
-            </select>
+  <div className="emg-filters">
+    {/* filtros aquí */}
+  </div>
 
-            <select className="emg-input" value={filtro.severidad} onChange={(e)=>setFiltro(prev=>({...prev, severidad: e.target.value}))}>
-              <option value="">Severidad</option>
-              {nivelesDB.map(n => <option key={n.id_nivel} value={n.nombre}>{n.nombre}</option>)}
-            </select>
+  <div className="emg-table">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tipo</th>
+          <th>Severidad</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Ubicación</th>
+          <th>Coordenada X</th>
+          <th>Coordenada Y</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {listadoFiltrado.map((r) => (
+          <tr key={r.id_emergencia} onClick={() => seleccionarFila(r)}>
+            <td>{r.id_emergencia}</td>
+            <td>{r.tipo_nombre}</td>
+            <td>{r.nivel_nombre}</td>
+            <td>{r.fecha}</td>
+            <td>{r.hora}</td>
+            <td>{r.ubicacion}</td>
+            <td>{r.coordenada_x ?? '-'}</td>
+            <td>{r.coordenada_y ?? '-'}</td>
+            <td>{r.descripcion}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
 
-            <input type="date" className="emg-input" value={filtro.fecha} onChange={(e)=>setFiltro(prev=>({...prev, fecha: e.target.value}))} />
-            <input type="time" className="emg-input" value={filtro.hora} onChange={(e)=>setFiltro(prev=>({...prev, hora: e.target.value}))} />
-          </div>
-
-          <table className="emg-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Tipo</th>
-                <th>Severidad</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Ubicación</th>
-              </tr>
-            </thead>
-            <tbody>
-              {listadoFiltrado.map((r) => (
-                <tr
-                  key={r.id_emergencia}
-                  className={r.id_emergencia === seleccionId ? 'emg-row-selected' : ''}
-                  onClick={()=> seleccionarFila(r)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <td>{r.id_emergencia}</td>
-                  <td>{r.tipo_nombre}</td>
-                  <td>{r.nivel_nombre}</td>
-                  <td>{r.fecha}</td>
-                  <td>{r.hora}</td>
-                  <td>{r.ubicacion}</td>
-                </tr>
-              ))}
-              {listadoFiltrado.length === 0 && (
-                <tr><td colSpan={6} style={{ textAlign: 'center', padding: 12 }}>Sin resultados</td></tr>
-              )}
-            </tbody>
-          </table>
-        </div>
       </div>
     </>
   );

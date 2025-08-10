@@ -65,6 +65,20 @@ body{
   font-size:20px;
 }
 
+/* Limita la altura del formulario y habilita scroll vertical */
+.contenedor-personal.registrar-personal {
+  max-height: 650px;   /* ajusta si quieres más/menos alto */
+  overflow-y: auto;    /* activa el scroll vertical cuando haga falta */
+  overflow-x: hidden;  /* evita scroll horizontal */
+  padding-right: 6px;  /* respiro para que no tape el scrollbar */
+}
+
+/* Asegura que el título del form ocupe toda la fila (sin inputs al lado) */
+.contenedor-personal.registrar-personal h2.subtitulo {
+  grid-column: 1 / -1;
+}
+
+
 .contenedor-personal label{ display:block; }
 
 .etiqueta{
