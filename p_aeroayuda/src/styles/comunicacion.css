@@ -83,3 +83,86 @@ body {
   background-color: #f9f9f9;
   margin-bottom: 15px;
 }
+
+/* Panel del chat con tamaño fijo */
+.panel.panel-chat {
+  display: flex;
+  flex-direction: column;
+  width: 420px;        /* ajusta si quieres */
+  height: 520px;       /* ✅ alto fijo del panel */
+  min-height: 520px;
+  max-height: 520px;
+}
+
+/* Área de mensajes con scroll solo vertical */
+.panel.panel-chat .chat-mensajes {
+  flex: 1;                   /* ocupa todo el espacio disponible del panel */
+  height: auto;              /* se calcula por flex */
+  overflow-y: auto;          /* ✅ solo scroll vertical */
+  overflow-x: hidden;        /* ❌ sin scroll horizontal */
+  padding: 12px;
+  border-radius: 10px;
+  background: #f2f6fa;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid #e2e8f0;
+  word-break: break-word;    /* corta palabras larguísimas */
+}
+
+/* Input + botón no cambian el alto del panel */
+.panel.panel-chat .chat-input-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-shrink: 0;            /* ✅ no se reduce ni crece */
+}
+
+.panel.panel-chat .input-chat {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  font-size: 14px;
+}
+
+.panel.panel-chat .input-chat:focus {
+  border-color: #008cff;
+  box-shadow: 0 0 0 3px rgba(0, 140, 255, 0.12);
+}
+
+.panel.panel-chat .boton-enviar {
+  background: #008cff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.panel.panel-chat .boton-enviar:hover {
+  background: #006fd6;
+}
+
+/* Burbujas (por si no las tienes ya) */
+.panel.panel-chat .chat-mensaje {
+  position: relative;
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  line-height: 1.4;
+  font-size: 14px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.panel.panel-chat .chat-mensaje.operador { align-self: flex-start; background: #e8f3ff; color: #0b3154; border-bottom-left-radius: 6px; }
+.panel.panel-chat .chat-mensaje.usuario   { align-self: flex-end;   background: #008cff; color: #fff;   border-bottom-right-radius: 6px; }
+.panel.panel-chat .chat-mensaje.operador::after { content:""; position:absolute; bottom:0; left:-16px;  border:8px solid transparent; border-right-color:#e8f3ff; border-left:0; border-bottom:0; }
+.panel.panel-chat .chat-mensaje.usuario::after   { content:""; position:absolute; bottom:0; right:-16px; border:8px solid transparent; border-left-color:#008cff; border-right:0; border-bottom:0; }
+
+/* Scrollbar opcional */
+.panel.panel-chat .chat-mensajes::-webkit-scrollbar { width: 10px; }
+.panel.panel-chat .chat-mensajes::-webkit-scrollbar-thumb { background: #c3d4e6; border-radius: 8px; }
+.panel.panel-chat .chat-mensajes::-webkit-scrollbar-thumb:hover { background: #9db7d6; }

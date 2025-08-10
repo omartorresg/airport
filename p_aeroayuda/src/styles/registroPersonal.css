@@ -1,93 +1,278 @@
-/* Reutiliza tu estilo base: .contenedor-clasi, .contenedor-clasificacion, .subtitulo,
-   .etiqueta, .input-clasificacion, .boton-verificar, .resultado-ok, etc. */
-
-/* Panel genérico */
-.panel {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 140, 255, 0.15);
-  padding: 16px;
-  width: 100%;
-  box-sizing: border-box;
+/* ====== Base ====== */
+:root{
+  --azul:#1576c6;
+  --azul-claro:#008cff;
+  --borde:#e5e7eb;
+  --sombra:0 4px 20px rgba(0,140,255,0.15);
+  --radius:12px;
+  --txt:#0f172a;
 }
 
-.panel-contacto h3 {
-  margin: 0 0 10px 0;
-  color: #1576c6;
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  padding:0;
+  font-family: Arial, sans-serif;
+  background-color:#f3f6fc;
+  color:var(--txt);
 }
 
-/* Filas de contacto (emails / teléfonos) */
-.fila-contacto {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr auto auto;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 10px;
+/* ====== Título ====== */
+.titulo-personal{
+  text-align:center;
+  font-size:18px;
+  color:#fff;
+  font-weight:bold;
+  border-bottom:4px solid var(--azul-claro);
+  width:fit-content;
+  padding-bottom:0;
+  margin:30px auto 0 auto;
 }
 
-.chk {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
+/* ====== Layout principal ====== */
+.contenedor-perso{
+  display:grid;
+  grid-template-columns: 0.85fr 0.85fr; /* paneles más estrechos */
+  justify-content:center;
+  gap:24px;
+  padding:24px 32px 40px 32px;
+  margin-left: 285px; /* si usas sidebar, ajusta */
 }
 
-.btn-mini {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
+/* ====== Tarjetas / Paneles ====== */
+.contenedor-personal,
+.panel{
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:var(--sombra);
+  padding:24px;
+  max-width:550px;  /* no tan ancho */
 }
 
-.btn-mini.agregar {
-  background-color: #e6f0ff;
-  color: #1576c6;
-  margin-top: 6px;
+/* ====== Formulario principal ====== */
+.contenedor-personal{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:16px;
 }
 
-.btn-mini.eliminar {
-  background-color: #ffe6e6;
-  color: #b43333;
+.contenedor-personal h2.subtitulo{
+  grid-column:1 / -1;
+  margin:0 0 8px 0; /* menos espacio bajo la línea */
+  color:var(--azul);
+  text-align:center;
+  font-size:20px;
 }
 
-.registrar-personal .input-clasificacion {
-  width: 100%;
+.contenedor-personal label{ display:block; }
+
+.etiqueta{
+  display:inline-block;
+  border-bottom:2px solid #7ea0bb;
+  padding-bottom:4px;
+  margin-bottom:8px;
+  font-weight:bold;
+}
+
+.input-personal{
+  width:100%;
+  padding:10px 12px;
+  border:2px solid #b5b5b5;
+  border-radius:8px;
+  font-size:14px;
+  background:#fff;
+}
+
+.input-personal:focus{
+  outline:none;
+  border-color: rgba(0,140,255,0.6);
 }
 
 /* Mostrar/ocultar contraseña */
-.password-container {
-  position: relative;
-  display: flex;
-  align-items: center;
+.mostrar-pass{
+  display:inline-flex;
+  align-items:center;
+  margin-top:10px;
+  gap:10px;  /* espacio claro entre check y texto */
+  cursor:pointer;
+  font-size:14px;
 }
-.password-container input {
-  flex: 1;
-  padding-right: 40px; /* espacio para el botón */
-}
+.mostrar-pass input[type="checkbox"]{ margin:0; }
 
-.mostrar-pass {
-  display: inline-flex;           /* inline para que no ocupe todo el ancho */
-  align-items: center;
-  vertical-align: middle;
-  margin-top: 11px;
+/* ====== Panel de contacto (emails/teléfonos) ====== */
+.panel-contacto{
+  grid-column:1 / -1; /* ocupar ancho completo del form */
 }
 
-.mostrar-pass input[type="checkbox"] {
-  margin: 0;
-  line-height: 1;                 /* evita saltos raros */
+.panel-contacto h3{
+  margin:0 0 12px 0;
+  color:var(--azul);
 }
 
-.mostrar-pass__texto {
-  display: inline-block;
-  margin-left: 5px;              /* ← espacio claro entre check y texto */
-  line-height: 1;                 /* alinea con el checkbox */
+.fila-contacto{
+  display:grid;
+  grid-template-columns: 1.6fr 1fr auto auto;
+  gap:10px;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.chk{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:14px;
+}
+
+.btn-mini{
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.btn-mini.agregar{
+  background-color:#e6f0ff;
+  color:var(--azul);
+  margin-top:6px;
+}
+.btn-mini.eliminar{
+  background-color:#ffe6e6;
+  color:#b43333;
+}
+
+/* ====== Botones de acción (alineados y mismo tamaño) ====== */
+.acciones-form{
+  grid-column:1 / -1;
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap:10px;
+  margin-top:10px;
+}
+
+.acciones-form button,
+.boton-verificar,
+.boton-secundario,
+.boton-terciario,
+.boton-peligro{
+  /* Normalizamos TODO para que no haya uno más alto/ancho que otro */
+  height:42px !important;             /* mismo alto */
+  padding:0 !important;               /* sin paddings que rompan */
+  margin:0 !important;                /* sin márgenes raros */
+  line-height:42px;                   /* texto centrado vertical con fallback */
+  font-size:15px;
+  font-weight:bold;
+  border-radius:8px;
+  cursor:pointer;
+  display:flex !important;            /* forzamos flex */
+  align-items:center !important;      /* centrado vertical */
+  justify-content:center !important;  /* centrado horizontal */
+  width:100% !important;              /* todos ocupan su celda completa */
+  min-width:0;
+  border:2px solid transparent;       /* para igualar cajas con los que sí tienen borde */
+  box-sizing:border-box;
+}
+
+/* Colores */
+.boton-verificar{
+  background-color: var(--azul) !important;
+  color:#fff !important;
+  border-color: transparent !important;
+}
+.boton-verificar:hover{ background-color:#0e5a99 !important; }
+
+.boton-secundario{
+  background-color:#e6f0ff !important;
+  color:var(--azul) !important;
+  border-color: var(--azul) !important;
+}
+
+.boton-terciario{
+  background-color:#f8fafc !important;
+  color:#334155 !important;
+  border-color:#cbd5e1 !important;
+}
+
+.boton-peligro{
+  background-color:#fee2e2 !important;
+  color:#b91c1c !important;
+  border-color:#ef4444 !important;
+}
+.boton-peligro:hover{
+  background:#fecaca !important;
+  border-color:#dc2626 !important;
+}
+
+/* Mensajes */
+.resultado-ok{
+  grid-column:1 / -1;
+  margin-top:10px;
+  text-align:center;
+  font-weight:bold;
+  color:green;
+}
+
+/* ====== Panel de consulta ====== */
+.panel-consulta .subtitulo{
+  margin:0 0 12px 0;  /* menos espacio bajo la línea */
+  color:var(--azul);
+  text-align:center;
+  font-size:20px;
+}
+
+/* Filtros compactos */
+.panel-consulta .filter-row{
+  display:grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr 0.8fr;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+/* La tabla define el ancho visual, no forzamos un width del panel para que
+   “se vea del tamaño de la cantidad de datos” de forma natural */
+.result-table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  border-radius:8px;
+  overflow:hidden;
 }
 
 
-/* Responsive */
-@media (max-width: 720px) {
-  .fila-contacto {
+
+.result-table th,
+.result-table td{
+  border:1px solid var(--borde);
+  padding:10px;
+  font-size:14px;
+  text-align:left;
+}
+
+.result-table th{ background:#f1f5f9; }
+
+.result-table tr.fila-seleccionada{ background:#e8f3ff; }
+
+/* ====== Responsivo ====== */
+@media (max-width: 1100px){
+  .contenedor-perso{
     grid-template-columns: 1fr;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 860px){
+  .contenedor-personal{
+    grid-template-columns: 1fr;
+  }
+  .fila-contacto{
+    grid-template-columns: 1fr;
+    gap:8px;
+  }
+  .acciones-form{
+    grid-template-columns: 1fr 1fr;
+  }
+  .panel-consulta .filter-row{
+    grid-template-columns: 1fr 1fr;
   }
 }
