@@ -1,0 +1,217 @@
+:root {
+  --evc-azul: #1576c6;
+  --evc-azul-claro: #008cff;
+  --evc-borde: #e5e7eb;
+  --evc-sombra: 0 4px 20px rgba(0, 140, 255, 0.15);
+  --evc-radius: 12px;
+  --evc-text: #0f172a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  color: var(--evc-text);
+}
+
+/* ====== Título ====== */
+.evc-title-wrap {
+  text-align: center;
+  font-size: 18px;
+  margin-left: 550px;
+  color: white;
+  font-weight: bold;
+  border-bottom: 4px solid var(--evc-azul-claro);
+  padding-bottom: 0;
+  width: fit-content;
+  margin-top: 40px;
+}
+.evc-title { margin-bottom: 10px; line-height: 1.1; }
+
+/* ====== Layout ====== */
+.evc-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 0.85fr;
+  justify-content: center;
+  gap: 24px;
+  padding: 24px 32px 40px 32px;
+  margin-left: 285px;
+}
+
+.evc-card {
+  background: #fff;
+  border-radius: var(--evc-radius);
+  box-shadow: var(--evc-sombra);
+  padding: 24px;
+  max-width: 550px;
+}
+
+.evc-subtitle {
+  margin: 0 0 8px 0;
+  color: var(--evc-azul);
+  text-align: center;
+  font-size: 20px;
+}
+
+/* ====== Formulario ====== */
+.evc-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-height: 650px;     /* scroll interno */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+}
+/* h2 ocupa toda la fila */
+.evc-form .evc-subtitle { grid-column: 1 / -1; }
+
+.evc-col2 { grid-column: 1 / -1; }
+
+.evc-label {
+  display: inline-block;
+  border-bottom: 2px solid #7ea0bb;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.evc-form label {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.evc-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #b5b5b5;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+  min-height: 42px;
+}
+.evc-input:focus {
+  outline: none;
+  border-color: rgba(0, 140, 255, 0.6);
+}
+
+/* ====== Acciones ====== */
+.evc-actions {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+.evc-actions .evc-btn {
+  height: 42px;
+  padding: 0;
+  margin: 0;
+  line-height: 42px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.evc-btn-primary {
+  background-color: var(--evc-azul) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+.evc-btn-primary:hover { background-color: #0e5a99 !important; }
+
+.evc-btn-secondary {
+  background-color: #e6f0ff !important;
+  color: var(--evc-azul) !important;
+  border-color: var(--evc-azul) !important;
+}
+.evc-btn-danger {
+  background-color: #fee2e2 !important;
+  color: #b91c1c !important;
+  border-color: #ef4444 !important;
+}
+.evc-btn-danger:hover {
+  background: #fecaca !important;
+  border-color: #dc2626 !important;
+}
+.evc-btn-ghost {
+  background-color: #f8fafc !important;
+  color: #334155 !important;
+  border-color: #cbd5e1 !important;
+}
+
+.evc-msg {
+  grid-column: 1 / -1;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: green;
+}
+
+/* ====== Filtros y Consulta ====== */
+.evc-filters {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.8fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Un solo scroll (horizontal y vertical) en la tabla */
+.evc-table-wrap {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 400px;
+  border: 1px solid var(--evc-borde);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.evc-table {
+  min-width: 900px;
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.evc-table th,
+.evc-table td {
+  border: 1px solid var(--evc-borde);
+  padding: 10px;
+  font-size: 14px;
+  text-align: left;
+}
+.evc-table th { background: #f1f5f9; }
+
+.evc-row-selected { background: #e8f3ff; }
+
+/* Botón pequeño para acciones en tabla */
+.evc-chip {
+  padding: 6px 10px;
+  border-radius: 9999px;
+  border: 1px solid var(--evc-borde);
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 12px;
+}
+.evc-chip:hover {
+  background: #eef2f7;
+}
+
+/* ====== Responsivo ====== */
+@media (max-width: 1100px) {
+  .evc-grid {
+    grid-template-columns: 1fr;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 860px) {
+  .evc-form { grid-template-columns: 1fr; }
+  .evc-filters { grid-template-columns: 1fr 1fr; }
+  .evc-actions { grid-template-columns: 1fr 1fr; }
+}

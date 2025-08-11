@@ -10,6 +10,7 @@ import Protocolo from "../paginas/Protocolo";
 import RegistroPersonal from "../paginas/RegistroPersonal";
 import Comunicacion from "../paginas/Comunicacion";
 import AsignacionRoles from "../paginas/AsignacionRoles";
+import EvacuaFlujo from "../paginas/EvacuaFlujo";
 import ClasificacionRegistro from "../paginas/ClasificacionRegistro";
 import React from "react";
 import ReporteQuejas from "../paginas/ReporteQuejas"; 
@@ -53,8 +54,9 @@ export default function AppRoutes() {
         <Route path="/paginas/ControlSeguridad" element={<ControlSeguridad />} />
        
         <Route path="/paginas/Tablero" element={<Tablero />} />
+        
         <Route path="/paginas/Quejas" element={<Quejas />} />
-        <Route path="/paginas/Checkin" element={<CheckIn />} />
+        <Route path="/paginas/EvacuaFlujo" element={<EvacuaFlujo />} />
         <Route path="/paginas/Checkin" element={<CheckIn />} />
         <Route path="/paginas/RegistroPersonal" element={<RegistroPersonal />} />
         <Route path="/paginas/AsignacionRoles" element={<AsignacionRoles />} />

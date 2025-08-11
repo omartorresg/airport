@@ -1,4 +1,4 @@
-:root {
+:root { 
   --emg-azul: #1576c6;
   --emg-azul-claro: #008cff;
   --emg-borde: #e5e7eb;
@@ -19,23 +19,24 @@ body {
   color: var(--emg-text);
 }
 
+/* ====== Título ====== */
 .emg-title-wrap {
   text-align: center;
   font-size: 18px;
   margin-left: 550px;
   color: white;
   font-weight: bold;
-  border-bottom: 4px solid #008cff;
-  padding-bottom: 0px;
+  border-bottom: 4px solid var(--emg-azul-claro);
+  padding-bottom: 0;
   width: fit-content;
   margin-top: 40px;
 }
-
 .emg-title {
   margin-bottom: 10px;
   line-height: 1.1;
 }
 
+/* ====== Layout ====== */
 .emg-grid {
   display: grid;
   grid-template-columns: 0.85fr 0.85fr;
@@ -60,25 +61,22 @@ body {
   font-size: 20px;
 }
 
-/* Asegura que el h2 dentro del formulario ocupe toda la fila */
-.emg-form .emg-subtitle {
-  grid-column: 1 / -1;
-}
-
-
+/* ====== Formulario ====== */
 .emg-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  max-height: 650px;
+  max-height: 650px;     /* scroll interno del formulario */
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 6px;
 }
-
-.emg-col2 {
+/* El h2 ocupa toda la fila */
+.emg-form .emg-subtitle {
   grid-column: 1 / -1;
 }
+
+.emg-col2 { grid-column: 1 / -1; }
 
 .emg-label {
   display: inline-block;
@@ -94,11 +92,6 @@ body {
   justify-content: flex-start;
 }
 
-.emg-form label select {
-  height: 42px; /* igualamos la altura de ambos select */
-}
-
-
 .emg-input {
   width: 100%;
   padding: 10px 12px;
@@ -106,20 +99,22 @@ body {
   border-radius: 8px;
   font-size: 14px;
   background: #fff;
+  min-height: 42px;       /* uniforma con selects */
 }
+.emg-form label select { height: 42px; }
 
 .emg-input:focus {
   outline: none;
   border-color: rgba(0, 140, 255, 0.6);
 }
 
+/* Mapa */
 .emg-map-wrap {
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
   border: 2px solid #ccc;
 }
-
 .emg-map {
   width: 100%;
   height: 300px;
@@ -129,6 +124,7 @@ body {
   background: #f9fafb;
 }
 
+/* ====== Acciones ====== */
 .emg-actions {
   grid-column: 1 / -1;
   display: grid;
@@ -136,7 +132,6 @@ body {
   gap: 10px;
   margin-top: 4px;
 }
-
 .emg-actions .emg-btn {
   height: 42px;
   padding: 0;
@@ -152,41 +147,35 @@ body {
   border: 2px solid transparent;
 }
 
+/* Botones (variables corregidas) */
 .emg-btn-primary {
-  background-color: var(--azul) !important;
-  color:#fff !important;
+  background-color: var(--emg-azul) !important;
+  color: #fff !important;
   border-color: transparent !important;
 }
-
-.emg-btn-primary:hover {
-background-color:#0e5a99 !important;   background: #0e5a99;
-}
+.emg-btn-primary:hover { background-color: #0e5a99 !important; }
 
 .emg-btn-secondary {
-  background-color:#e6f0ff !important;
-  color:var(--azul) !important;
-  border-color: var(--azul) !important;
+  background-color: #e6f0ff !important;
+  color: var(--emg-azul) !important;
+  border-color: var(--emg-azul) !important;
 }
-
 .emg-btn-danger {
-  background-color:#fee2e2 !important;
-  color:#b91c1c !important;
-  border-color:#ef4444 !important;
+  background-color: #fee2e2 !important;
+  color: #b91c1c !important;
+  border-color: #ef4444 !important;
 }
-
 .emg-btn-danger:hover {
-  background:#fecaca !important;
-  border-color:#dc2626 !important;
+  background: #fecaca !important;
+  border-color: #dc2626 !important;
 }
-
 .emg-btn-ghost {
- background-color:#f8fafc !important;
-  color:#334155 !important;
-  border-color:#cbd5e1 !important;
+  background-color: #f8fafc !important;
+  color: #334155 !important;
+  border-color: #cbd5e1 !important;
 }
 
-
-
+/* Mensajes */
 .emg-msg {
   grid-column: 1 / -1;
   margin-top: 10px;
@@ -195,6 +184,7 @@ background-color:#0e5a99 !important;   background: #0e5a99;
   color: green;
 }
 
+/* ====== Filtros y Consulta ====== */
 .emg-filters {
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr 1fr;
@@ -202,14 +192,31 @@ background-color:#0e5a99 !important;   background: #0e5a99;
   margin-bottom: 12px;
 }
 
+/* Panel de consulta sin scroll adicional */
+.emg-consulta {
+  max-height: 500px;     /* opcional: alto del panel */
+  display: flex;
+  flex-direction: column;
+  overflow: visible;      /* evita segunda barra */
+}
+
+/* Contenedor de la tabla: ÚNICO scroll */
+.emg-table-wrap {
+  overflow-x: auto;       /* scroll horizontal si es necesario */
+  overflow-y: auto;       /* scroll vertical si hay muchas filas */
+  max-height: 400px;      /* ajusta a gusto */
+  border: 1px solid var(--emg-borde);
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* La tabla real */
 .emg-table {
+  min-width: 900px;       /* fuerza scroll horizontal en pantallas chicas */
   width: 100%;
   border-collapse: collapse;
   background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
 }
-
 .emg-table th,
 .emg-table td {
   border: 1px solid var(--emg-borde);
@@ -217,51 +224,11 @@ background-color:#0e5a99 !important;   background: #0e5a99;
   font-size: 14px;
   text-align: left;
 }
+.emg-table th { background: #f1f5f9; }
 
-.emg-table th {
-  background: #f1f5f9;
-}
+.emg-row-selected { background: #e8f3ff; }
 
-.emg-row-selected {
-  background: #e8f3ff;
-}
-/* ===== Scroll horizontal solo en el panel de consulta ===== */
-.emg-consulta {
-  max-height: 500px;
-  display: flex;
-  flex-direction: column;
-}
-
-.emg-consulta .emg-table {
-  display: block;
-  overflow-x: auto; /* permite scroll horizontal */
-  overflow-y: auto; /* también mantiene scroll vertical si hay muchos registros */
-  max-height: 400px;
-  white-space: nowrap; /* evita que las celdas bajen de línea */
-}
-
-.emg-table table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.emg-table th,
-.emg-table td {
-  border: 1px solid var(--emg-borde);
-  padding: 10px;
-  font-size: 14px;
-  text-align: left;
-}
-
-.emg-table th {
-  background: #f1f5f9;
-}
-
-.emg-row-selected {
-  background: #e8f3ff;
-}
-
-
+/* ====== Responsivo ====== */
 @media (max-width: 1100px) {
   .emg-grid {
     grid-template-columns: 1fr;
@@ -270,15 +237,7 @@ background-color:#0e5a99 !important;   background: #0e5a99;
 }
 
 @media (max-width: 860px) {
-  .emg-form {
-    grid-template-columns: 1fr;
-  }
-
-  .emg-filters {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .emg-actions {
-    grid-template-columns: 1fr 1fr;
-  }
+  .emg-form { grid-template-columns: 1fr; }
+  .emg-filters { grid-template-columns: 1fr 1fr; }
+  .emg-actions { grid-template-columns: 1fr 1fr; }
 }
