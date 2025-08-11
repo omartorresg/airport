@@ -75,3 +75,32 @@
     font-size: 1.2rem;
     color: #22c55e;
 }
+
+/* ===== Header estilo 'Registrar / Modificar Personal' ===== */
+.checkin-hero {
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .checkin-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .checkin-hero-title {
+    color: #fff;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .checkin-hero-title::after {
+    content: "";
+    display: block;
+    width: 60%;
+    height: 4px;
+    background-color: #1e90ff; /* Azul subrayado */
+    margin: 8px auto 0;
+    border-radius: 2px;
+  }
+  

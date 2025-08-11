@@ -26,33 +26,20 @@ export default function Login() {
     setError('');
     setLoading(true);
 
-<<<<<<< HEAD
-    // Buscar el usuario por correo
-    const { data: user, error: userError } = await supabase
-=======
     // 1. Buscar el usuario por correo
     const { data: user, error: fetchError } = await supabase
->>>>>>> 5efddf9c3dfa53e4a8a5a4f232b5a8914b3c3311
       .from('usuarios_login')
       .select('*')
       .eq('email', email)
       .single();
 
-<<<<<<< HEAD
-    if (userError || !user) {
-=======
     if (fetchError || !user) {
->>>>>>> 5efddf9c3dfa53e4a8a5a4f232b5a8914b3c3311
       setError('Correo no encontrado');
       setLoading(false);
       return;
     }
 
-<<<<<<< HEAD
-    // Verificar contraseña
-=======
     // 2. Verificar la contraseña hasheada
->>>>>>> 5efddf9c3dfa53e4a8a5a4f232b5a8914b3c3311
     const passwordOk = await bcrypt.compare(password, user.password_hash);
     if (!passwordOk) {
       setError('Contraseña incorrecta');
@@ -60,21 +47,14 @@ export default function Login() {
       return;
     }
 
-<<<<<<< HEAD
-=======
     // 3. Validar estado del usuario
->>>>>>> 5efddf9c3dfa53e4a8a5a4f232b5a8914b3c3311
     if (user.estado !== 'activo') {
       setError('Usuario inactivo o bloqueado');
       setLoading(false);
       return;
     }
 
-<<<<<<< HEAD
-    // Obtener nombre del rol desde tabla `roles`
-=======
     // 4. Obtener el nombre del rol desde la tabla roles
->>>>>>> 5efddf9c3dfa53e4a8a5a4f232b5a8914b3c3311
     const { data: rolData, error: rolError } = await supabase
       .from('roles')
       .select('nombre_rol')
@@ -82,25 +62,15 @@ export default function Login() {
       .single();
 
     if (rolError || !rolData) {
-<<<<<<< HEAD
-      setError('No se pudo obtener el rol del usuario');
-=======
       setError('Error al obtener el rol');
->>>>>>> 5efddf9c3dfa53e4a8a5a4f232b5a8914b3c3311
       setLoading(false);
       return;
     }
 
     const nombreRol = rolData.nombre_rol.toLowerCase();
-<<<<<<< HEAD
-    console.log('Rol obtenido:', nombreRol);
-
-    // Guardar sesión
-=======
     console.log("Rol obtenido:", nombreRol);
 
     // 5. Guardar sesión
->>>>>>> 5efddf9c3dfa53e4a8a5a4f232b5a8914b3c3311
     localStorage.setItem('usuario', JSON.stringify(user));
     if (rememberMe) {
       localStorage.setItem('emailRecordado', email);
@@ -108,19 +78,11 @@ export default function Login() {
       localStorage.removeItem('emailRecordado');
     }
 
-<<<<<<< HEAD
-    // Redirección según el rol
-    console.log(nombreRol)
-    switch (nombreRol) {
-      case 'administrador':
-        navigate('/admin');
-=======
     // 6. Redirigir según el rol
     console.log("Redirigiendo a:", nombreRol);
     switch (nombreRol) {
       case 'administrador':
         navigate('/paginas/Tablero');
->>>>>>> 5efddf9c3dfa53e4a8a5a4f232b5a8914b3c3311
         break;
       case 'seguridad':
         navigate('/paginas/ControlSeguridad');
@@ -180,7 +142,6 @@ export default function Login() {
           {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
         </form>
       </div>
-    </>
-  );
+    </>
+  );
 }
-      

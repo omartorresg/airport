@@ -37,7 +37,6 @@ export const menuItems: MenuItem[] = [{
     path: "/checkin",
     subItems: [
       { label: "Verificación de Reserva", path: "/paginas/Checkin" },
-      { label: "Asignación de Asiento", path: "/paginas/AsignacionAsiento" },
       { label: "Registro de Equipaje", path: "/paginas/RegistroMaleta" },
       { label: "Generación del Pase de Abordaje", path: "/paginas/GeneracionPaseAbordaje" },
       { label: "Actualización del Estado del Pasajero", path: "/checkin/estado" },
