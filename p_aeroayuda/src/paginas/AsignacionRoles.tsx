@@ -11,6 +11,7 @@ interface Personal {
 interface Rol {
   id_rol: number;
   nombre_rol: string;
+  area: string; // << añadido
 }
 
 interface Equipo {
@@ -35,15 +36,18 @@ const AsignacionRolesEquipos = () => {
         .from('personal_operativo')
         .select('id_personal, nombre, departamentos(nombre)');
 
-      // Roles
+      // Roles (solo área emergencias)
       const { data: roles, error: errorRoles } = await supabase
         .from('roles')
-        .select();
+        .select('id_rol,nombre_rol,area')
+        .eq('area', 'emergencias')
+        .order('nombre_rol');
 
       // Equipos
       const { data: equipos, error: errorEquipos } = await supabase
         .from('equipos')
-        .select();
+        .select()
+        .order('nombre');
 
       if (errorPersonal || errorRoles || errorEquipos) {
         console.error('Error al cargar datos:', errorPersonal || errorRoles || errorEquipos);
@@ -51,7 +55,6 @@ const AsignacionRolesEquipos = () => {
         return;
       }
 
-      // Formateo del personal para incluir departamento
       const personalFormateado = (personal || []).map((p: any) => ({
         id_personal: p.id_personal,
         nombre: p.nombre,
@@ -59,14 +62,15 @@ const AsignacionRolesEquipos = () => {
       }));
 
       setPersonalDB(personalFormateado);
-      setRolesDB(roles || []);
-      setEquiposDB(equipos || []);
+      setRolesDB((roles || []) as Rol[]);
+      setEquiposDB((equipos || []) as Equipo[]);
     };
 
     cargarDatos();
   }, []);
 
   const asignar = async () => {
+    setMensaje('');
     if (!idPersonal || !idRol || !idEquipo) {
       setMensaje('❌ Todos los campos son obligatorios.');
       return;
@@ -74,9 +78,9 @@ const AsignacionRolesEquipos = () => {
 
     const { error } = await supabase.from('asignacion_roles_equipos').insert([
       {
-        id_personal: parseInt(idPersonal),
-        id_rol: parseInt(idRol),
-        id_equipo: parseInt(idEquipo)
+        id_personal: parseInt(idPersonal, 10),
+        id_rol: parseInt(idRol, 10),
+        id_equipo: parseInt(idEquipo, 10)
       }
     ]);
 
@@ -110,7 +114,7 @@ const AsignacionRolesEquipos = () => {
             ))}
           </select>
 
-          <label className="etiqueta">Rol:</label>
+          <label className="etiqueta">Rol (Área: Emergencias):</label>
           <select className="input-asignacion" value={idRol} onChange={(e) => setIdRol(e.target.value)}>
             <option value="">Seleccione</option>
             {rolesDB.map((r) => (

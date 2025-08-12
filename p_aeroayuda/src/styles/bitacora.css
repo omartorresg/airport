@@ -1,0 +1,175 @@
+:root{
+  --bit-azul:#1576c6;
+  --bit-azul-claro:#008cff;
+  --bit-borde:#e5e7eb;
+  --bit-sombra:0 4px 20px rgba(0,140,255,0.15);
+  --bit-radius:12px;
+  --bit-text:#0f172a;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  padding:0;
+  font-family: Arial, sans-serif;
+  color:var(--bit-text);
+}
+
+/* Título */
+.bit-title-wrap{
+  text-align:center;
+  font-size:18px;
+  color:#fff;
+  font-weight:bold;
+  border-bottom:4px solid var(--bit-azul-claro);
+  width:fit-content;
+  padding-bottom:0;
+  margin:30px auto 0 auto;
+}
+.bit-title{ margin:0 0 6px 0; }
+
+/* Layout principal */
+.bit-grid{
+  display:grid;
+  grid-template-columns: 0.85fr 0.85fr;
+  justify-content:center;
+  gap:24px;
+  padding:24px 32px 40px 32px;
+  margin-left: 285px; /* ajusta si tienes sidebar */
+}
+
+/* Tarjetas */
+.bit-card{
+  background:#fff;
+  border-radius:var(--bit-radius);
+  box-shadow:var(--bit-sombra);
+  padding:24px;
+  max-width:550px;
+}
+
+/* Formulario */
+.bit-form{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:16px;
+  max-height: 650px;        /* hace el scroll vertical del formulario */
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-right:6px;
+}
+.bit-subtitle{
+  grid-column:1/-1;
+  margin:0 0 8px 0;
+  color:var(--bit-azul);
+  text-align:center;
+  font-size:20px;
+}
+.bit-col2{ grid-column:1/-1; }
+
+.bit-label{
+  display:inline-block;
+  border-bottom:2px solid #7ea0bb;
+  padding-bottom:4px;
+  margin-bottom:8px;
+  font-weight:bold;
+}
+.bit-input{
+  width:100%;
+  padding:10px 12px;
+  border:2px solid #b5b5b5;
+  border-radius:8px;
+  font-size:14px;
+  background:#fff;
+}
+.bit-input:focus{
+  outline:none;
+  border-color: rgba(0,140,255,0.6);
+}
+
+/* Botones */
+.bit-actions{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap:10px;
+  margin-top:4px;
+}
+.bit-actions .bit-btn{
+  height:42px;
+  padding:0;
+  margin:0;
+  line-height:42px;
+  font-size:15px;
+  font-weight:bold;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  border:2px solid transparent;
+}
+.bit-btn-primary{ background:#1576c6; color:#fff; }
+.bit-btn-primary:hover{ background:#0e5a99; }
+.bit-btn-secondary{ background:#e6f0ff; color:#1576c6; border-color:#1576c6; }
+.bit-btn-danger{ background:#fee2e2; color:#b91c1c; border-color:#ef4444; }
+.bit-btn-danger:hover{ background:#fecaca; border-color:#dc2626; }
+.bit-btn-ghost{ background:#f8fafc; color:#334155; border-color:#cbd5e1; }
+
+.bit-msg{
+  grid-column:1/-1;
+  margin-top:10px;
+  text-align:center;
+  font-weight:bold;
+  color:green;
+}
+
+/* Consulta */
+.bit-consulta .bit-subtitle{ margin-bottom:12px; }
+.bit-filters{
+  display:grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+/* Tabla con scroll horizontal si hace falta */
+.bit-table-wrap{
+  border:1px solid var(--bit-borde);
+  border-radius:8px;
+  overflow:auto;          /* un solo scroll (x/y) */
+  max-height: 420px;
+  background:#fff;
+}
+.bit-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width: 900px;       /* obliga scroll horizontal en pantallas estrechas */
+}
+.bit-table th,
+.bit-table td{
+  border:1px solid var(--bit-borde);
+  padding:10px;
+  font-size:14px;
+  text-align:left;
+  vertical-align:top;
+}
+.bit-table th{ background:#f1f5f9; }
+.bit-row-selected{ background:#e8f3ff; }
+
+/* Responsivo */
+@media (max-width: 1100px){
+  .bit-grid{
+    grid-template-columns: 1fr;
+    margin-left:0;
+  }
+}
+@media (max-width: 860px){
+  .bit-form{ grid-template-columns: 1fr; }
+  .bit-filters{ grid-template-columns: 1fr; }
+  .bit-actions{ grid-template-columns: 1fr 1fr; }
+}
+
+.bit-input[type="time"]{
+  height: 42px; /* iguala a tus selects/botones si hace falta */
+}

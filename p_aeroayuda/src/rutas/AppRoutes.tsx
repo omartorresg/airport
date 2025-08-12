@@ -11,6 +11,7 @@ import RegistroPersonal from "../paginas/RegistroPersonal";
 import Comunicacion from "../paginas/Comunicacion";
 import AsignacionRoles from "../paginas/AsignacionRoles";
 import EvacuaFlujo from "../paginas/EvacuaFlujo";
+import Bitacora from "../paginas/Bitacora";
 import ClasificacionRegistro from "../paginas/ClasificacionRegistro";
 import React from "react";
 import ReporteQuejas from "../paginas/ReporteQuejas"; 
@@ -62,6 +63,7 @@ export default function AppRoutes() {
         <Route path="/paginas/AsignacionRoles" element={<AsignacionRoles />} />
         <Route path="paginas/ClasificacionRegistro" element={<ClasificacionRegistro />} />
         <Route path="paginas/Protocolo" element={<Protocolo />} />
+        <Route path="paginas/Bitacora" element={<Bitacora />} />
         <Route path="paginas/Comunicacion" element={<Comunicacion />} />
         <Route path="/quejas/ReporteQuejas" element={<ReporteQuejas />} />
         <Route path="/paginas/RegistroMaleta" element={<RegistroMaleta />} />

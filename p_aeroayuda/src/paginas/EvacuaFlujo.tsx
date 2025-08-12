@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../SupabaseClient";
-import "./evacuaFlujo.css";
+import "../styles/evacuaFlujo.css";
+
 
 type Zona = { id_zona: number; nombre_zona: string };
 type Tipo = { id_tipo_emergencia: number; nombre: string };
@@ -122,9 +123,12 @@ export default function EvacuacionFlujo() {
   };
 
   const validar = () => {
-    if (!idEmergencia || !idZona) return "Selecciona emergencia y zona.";
-    return "";
-  };
+  if (!idEmergencia || !idZona) return "Selecciona emergencia y zona.";
+  if (!nombreRuta || nombreRuta.trim().length < 3) 
+    return "El nombre de la ruta es obligatorio y debe tener al menos 3 caracteres.";
+  return "";
+};
+
 
   // CRUD
   const registrar = async () => {
@@ -247,13 +251,15 @@ export default function EvacuacionFlujo() {
           </label>
 
           <label className="evc-col2">
-            <span className="evc-label">Nombre de la Ruta (opcional)</span>
+            <span className="evc-label">Nombre de la Ruta</span>
             <input
-              className="evc-input"
-              value={nombreRuta}
-              onChange={(e) => setNombreRuta(e.target.value)}
-              placeholder="Ej: Corredor Norte A → Punto Seguro 3"
-            />
+  className="evc-input"
+  value={nombreRuta}
+  onChange={(e) => setNombreRuta(e.target.value)}
+  placeholder="Ej: Corredor Norte A → Punto Seguro 3"
+  required
+/>
+
           </label>
 
           <label>
