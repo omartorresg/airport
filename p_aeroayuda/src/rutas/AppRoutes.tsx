@@ -18,13 +18,35 @@ import AsignarAsiento from "../paginas/AsignacionAsiento";
 import GeneracionPase from "../paginas/GeneracionPaseAbordaje"
 import PanelQuejas from "../paginas/PanelPrioridadQuejas"
 import DisponibilidadPersonal from "../paginas/DisponibilidadPersonal"
+import { useLocation } from "react-router-dom";
+import GestionEquipaje from "../paginas/GestionEquipaje";
 
+
+// 👇 Wrapper que lee idPersona e idTicket desde location.state
+function GestionEquipajeRoute() {
+  const location = useLocation() as { state?: { idPersona?: number; idTicket?: number } };
+  const idPersona = location.state?.idPersona;
+  const idTicket  = location.state?.idTicket;
+
+  if (!idPersona || !idTicket) {
+    return (
+      <div style={{ padding: 24 }}>
+        <h2>Gestión de Equipaje</h2>
+        <p>Faltan parámetros: <b>idPersona</b> y/o <b>idTicket</b>.</p>
+        <p>Navega desde Check-In o pasa estos parámetros al ir a esta ruta.</p>
+      </div>
+    );
+  }
+  return <GestionEquipaje idPersona={idPersona} idTicket={idTicket} />;
+}
 
 export default function AppRoutes() {
   return (
     <Routes>
       {/* RUTA SIN LAYOUT: LOGIN */}
-      
+
+
+
  <Route index element={<Login />} />
       {/* RUTAS CON LAYOUT */}
       <Route path="/" element={<DashboardLayout />}>
@@ -45,6 +67,8 @@ export default function AppRoutes() {
         <Route path="/paginas/GeneracionPaseAbordaje" element={<GeneracionPase />} />
         <Route path="/paginas/PanelPrioridadQuejas" element={<PanelQuejas />} />
         <Route path="/paginas/DisponibilidadPersonal" element={<DisponibilidadPersonal />} />
+        <Route path="/paginas/GestionEquipaje" element={<GestionEquipajeRoute />} />
+        
       </Route>
     </Routes>
   );

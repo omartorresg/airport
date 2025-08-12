@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { supabase } from "../SupabaseClient";
 import "../styles/checkin.css";
+import { useNavigate } from "react-router-dom";
+
 
 type ReservaRaw = {
   id_reserva: number;
@@ -42,6 +44,8 @@ interface UIReserva {
   llegada: string | null;
   origen: number | null;
   destino: number | null;
+  origenIata?: string | null;   // 👈 nuevo
+  destinoIata?: string | null; 
   checkInConfirmado: boolean;
   checkInEstado: string | null;
   checkInFecha: string | null;
@@ -58,13 +62,13 @@ export default function CheckIn() {
   const buscarReserva = async () => {
     try {
       setLoading(true);
-      const cod = codigo.trim();
+      const cod = codigo.trim().toUpperCase(); // normaliza código
       if (!cod) {
         alert("Ingresa un código de reserva.");
         return;
       }
-
-      // 1) Reserva + pasajero(persona) + vuelo
+  
+      // 1) Reserva + pasajero(persona) + vuelo (sin joins raros)
       const { data: r, error } = await supabase
         .from("reserva")
         .select(`
@@ -92,15 +96,42 @@ export default function CheckIn() {
           )
         `)
         .eq("codigo_reserva", cod)
-        .maybeSingle<ReservaRaw>();
-
-      if (error || !r || !r.pasajero?.persona || !r.vuelo) {
+        .single<ReservaRaw>(); // usa single() para ver el error si no hay match
+  
+      if (error) {
         console.warn(error);
-        alert("Reserva no encontrada o datos incompletos.");
+        alert("Reserva no encontrada.");
         return;
       }
-
-      // 2) Último check-in (si existe)
+      if (!r || !r.pasajero?.persona || !r.vuelo) {
+        alert("Datos incompletos en la reserva.");
+        return;
+      }
+  
+      // 2) Trae códigos IATA con los IDs de aeropuertos
+      let origenIata: string | null = null;
+      let destinoIata: string | null = null;
+  
+      const ids: number[] = [];
+      if (r.vuelo.id_origen) ids.push(r.vuelo.id_origen);
+      if (r.vuelo.id_destino) ids.push(r.vuelo.id_destino);
+  
+      if (ids.length) {
+        const { data: aer, error: eA } = await supabase
+          .from("aeropuertos")
+          .select("id_aeropuerto, codigo_iata")
+          .in("id_aeropuerto", ids);
+  
+        if (!eA && aer) {
+          const map = new Map(aer.map(a => [a.id_aeropuerto, a.codigo_iata as string]));
+          origenIata = r.vuelo.id_origen ? map.get(r.vuelo.id_origen) ?? null : null;
+          destinoIata = r.vuelo.id_destino ? map.get(r.vuelo.id_destino) ?? null : null;
+        } else {
+          console.warn("Error leyendo aeropuertos:", eA?.message);
+        }
+      }
+  
+      // 3) Último check-in
       const { data: ci, error: e2 } = await supabase
         .from("check_in")
         .select("estado_checkin, fecha_hora")
@@ -108,25 +139,22 @@ export default function CheckIn() {
         .order("fecha_hora", { ascending: false })
         .limit(1)
         .maybeSingle<CheckInRaw>();
-
       if (e2) console.warn("Lectura check_in:", e2.message);
-
-      // 3) Calcular 'activa'
+  
+      // 4) Activa
       const estadoReserva = (r.estado ?? "").toLowerCase();
       const estadoVuelo = (r.vuelo.estado ?? "").toLowerCase();
-      const salidaDate = r.vuelo.fecha_hora_salida
-        ? new Date(r.vuelo.fecha_hora_salida)
-        : null;
+      const salidaDate = r.vuelo.fecha_hora_salida ? new Date(r.vuelo.fecha_hora_salida) : null;
       const activa =
         (estadoReserva === "confirmada" || estadoReserva === "pagada") &&
         estadoVuelo !== "cancelado" &&
         (!!salidaDate && salidaDate >= new Date());
-
+  
       const p = r.pasajero.persona;
-
+  
       setInfo({
         idReserva: r.id_reserva,
-        idPasajero: r.pasajero.id_persona,        // 👈 guardamos el id del pasajero
+        idPasajero: r.pasajero.id_persona,
         codigoReserva: r.codigo_reserva,
         pasajeroNombre: `${p.nombre} ${p.apellido}`,
         pasajeroDocumento: `${p.tipo_documento}: ${p.numero_documento}`,
@@ -135,10 +163,11 @@ export default function CheckIn() {
         horaAbordaje: r.vuelo.hora_abordaje,
         salida: r.vuelo.fecha_hora_salida,
         llegada: r.vuelo.fecha_hora_llegada,
-        origen: r.vuelo.id_origen,
+        origen: r.vuelo.id_origen,   // seguimos guardando IDs por si los usas
         destino: r.vuelo.id_destino,
-        checkInConfirmado:
-          (ci?.estado_checkin ?? "").toLowerCase() === "confirmado",
+        origenIata,          // 👈 valor calculado antes
+        destinoIata, 
+        checkInConfirmado: (ci?.estado_checkin ?? "").toLowerCase() === "confirmado",
         checkInEstado: ci?.estado_checkin ?? null,
         checkInFecha: ci?.fecha_hora ?? null,
         activa,
@@ -148,6 +177,43 @@ export default function CheckIn() {
     }
   };
 
+  // 👇 NUEVO: estado para validar equipaje antes de confirmar
+const [equipajeReady, setEquipajeReady] = useState(false);
+const [checkingEquipaje, setCheckingEquipaje] = useState(false);
+
+// 👇 NUEVO: función que verifica si el equipaje está facturado y con maletas
+const verificarEquipajeParaCheckin = async (idPasajero: number, idTicket?: number | null) => {
+  setCheckingEquipaje(true);
+  try {
+    // Construye el query dinámicamente
+    let query = supabase
+      .from("equipaje")
+      .select("id_equipaje, estado, cantidad")
+      .eq("id_pasajero", idPasajero);
+
+    if (idTicket) {
+      query = query.eq("id_ticket", idTicket);
+    }
+
+    const { data, error } = await query.maybeSingle();
+    if (error) {
+      console.warn("equipaje:", error.message);
+      setEquipajeReady(false);
+      return;
+    }
+
+    const ok =
+      !!data &&
+      (String(data.estado ?? "").toLowerCase() === "facturado") &&
+      Number(data.cantidad ?? 0) > 0;
+
+    setEquipajeReady(ok);
+  } finally {
+    setCheckingEquipaje(false);
+  }
+};
+
+  
   const confirmarCheckIn = async () => {
     if (!info) return;
     try {
@@ -198,6 +264,22 @@ export default function CheckIn() {
     }
   };
 
+  const navigate = useNavigate();
+
+  // Si aún no guardas idTicket en "info", lo buscamos en la tabla pasajero
+  const obtenerIdTicket = async (idPersona: number) => {
+    const { data, error } = await supabase
+      .from("pasajero")
+      .select("id_ticket")
+      .eq("id_persona", idPersona)
+      .single();
+    if (error) {
+      console.warn("No se pudo leer id_ticket del pasajero:", error.message);
+      return null;
+    }
+    return data?.id_ticket ?? null;
+  };
+  
   return (
 
 
@@ -240,7 +322,7 @@ export default function CheckIn() {
             <p><strong>Hora de abordaje:</strong> {info.horaAbordaje ?? "N/D"}</p>
             <p><strong>Salida:</strong> {info.salida ?? "N/D"}</p>
             <p><strong>Llegada:</strong> {info.llegada ?? "N/D"}</p>
-            <p><strong>Origen/Destino:</strong> {info.origen ?? "?"} → {info.destino ?? "?"}</p>
+            <p>Origen/Destino: {info.origenIata ?? "N/D"} → {info.destinoIata ?? "N/D"}</p>
 
             <hr className="divider" />
 
@@ -251,17 +333,28 @@ export default function CheckIn() {
 
             {!info.checkInConfirmado && (
               <div className="space-y-2">
-                <input
-                  className="checkin-input"
-                  placeholder="Asiento (opcional)"
-                  value={asiento}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setAsiento(e.target.value)
-                  }
-                />
                 <button className="checkin-button" onClick={confirmarCheckIn} disabled={saving}>
                   {saving ? "Confirmando..." : "Confirmar Check‑In"}
                 </button>
+                {/* Botón para ir a Gestión de Equipaje */}
+<button
+  className="checkin-button"
+  onClick={async () => {
+    if (!info) return;
+    // usa idTicket si ya lo guardas en info; si no, búscalo
+    const idTicket = (info as any).idTicket ?? (await obtenerIdTicket(info.idPasajero));
+    if (!idTicket) {
+      alert("Este pasajero no tiene ticket asociado.");
+      return;
+    }
+    navigate("/paginas/GestionEquipaje", {
+      state: { idPersona: info.idPasajero, idTicket }
+    });
+  }}
+>
+  Gestionar equipaje
+</button>
+
               </div>
             )}
           </div>
