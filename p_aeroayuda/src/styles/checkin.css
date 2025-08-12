@@ -104,3 +104,17 @@
     border-radius: 2px;
   }
   
+  /* Contenedor para separar botones de acciones */
+.checkin-actions {
+    display: flex;
+    flex-direction: column; /* uno debajo del otro */
+    gap: 30px; /* separación vertical */
+    margin-top: 1rem;
+}
+
+.space-y-2{
+     display: flex;
+    flex-direction: column; /* uno debajo del otro */
+    gap: 20px; /* separación vertical */
+    margin-top: 1rem;
+}

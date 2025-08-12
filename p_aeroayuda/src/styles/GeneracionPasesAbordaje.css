@@ -1,72 +1,115 @@
-.pagina-pase {
-  display: flex;
-  justify-content: center;
-  align-items: center; /* ahora se centra verticalmente también */
-  min-height: 100vh;
-  margin-left: 250px; /* espacio del sidebar */
-  background-color: #f44336; /* o tu fondo rojo degradado */
+/* ===== Fondo y layout general ===== */
+.pagina-pase{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  background:linear-gradient(180deg,#ff4b3e 0%,#ef4637 100%);
+  padding:32px 16px;
 }
 
-.pase-abordaje-container {
-  padding: 20px;
-  background: #f5fbff;
-  border-radius: 10px;
-  width: 400px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+/* ===== HERO (título grande blanco con subrayado) ===== */
+.pase-hero{ width:100%; }
+.pase-hero-inner{
+  max-width: 760px;
+  margin: 0 auto 16px;
+  text-align:center;
+}
+.pase-hero-title{
+  margin:0;
+  color:#fff;
+  font-weight:800;
+  font-size:44px;
+  letter-spacing:.2px;
+}
+.pase-hero-title::after{
+  content:"";
+  display:block;
+  width:120px;
+  height:6px;
+  margin:10px auto 0;
+  border-radius:999px;
+  background:#2f86f6;
 }
 
-.pase-abordaje-container input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-top: 15px;
+/* ===== Tarjeta blanca ===== */
+.pase-abordaje-container{
+  width:560px;
+  max-width:94vw;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 18px 40px rgba(0,0,0,.18);
+  padding:26px;
 }
 
-.pase-abordaje-container button {
-  margin-top: 10px;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background-color: #0066cc;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
+/* Título dentro de la tarjeta (negro) */
+.pase-title{
+  margin:0 0 14px;
+  font-size:28px;
+  font-weight:800;
+  color:#0f172a;
 }
 
-.pase {
-  background-color: #fff;
-  margin-top: 20px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+/* ===== Input y botón ===== */
+.pase-input{
+  width:100%;
+  height:46px;
+  border-radius:12px;
+  border:1.8px solid rgba(15,23,42,.16);
+  background:#f9fafb;
+  padding:0 14px;
+  font-size:16px;
+  outline:none;
+  transition: box-shadow .15s, border-color .15s, background .15s;
+  margin-bottom:10px;
+}
+.pase-input::placeholder{ color:#94a3b8; }
+.pase-input:focus{
+  background:#fff;
+  border-color:#2f86f6;
+  box-shadow:0 0 0 4px rgba(47,134,246,.18);
 }
 
-.pase p {
-  margin: 5px 0;
+.pase-btn{
+  width:100%;
+  height:46px;
+  border:none;
+  border-radius:12px;
+  background:#1666c5;
+  color:#fff;
+  font-weight:700;
+  font-size:16px;
+  cursor:pointer;
+  transition:transform .05s ease, filter .15s ease;
+}
+.pase-btn + .pase-btn{ margin-top:10px; }
+.pase-btn:hover{ filter:brightness(1.05); }
+.pase-btn:active{ transform:translateY(1px); }
+.pase-btn:disabled{ opacity:.7; cursor:default; }
+.pase-btn.secundario{ background:#0f172a; }
+
+/* ===== Tarjeta del pase generado ===== */
+.pase{ margin-top:16px; border:1px solid #e6eef7; border-radius:14px; overflow:hidden; background:#fff; }
+.pase-header{ display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:#2f86f6; color:#fff; }
+.pase-brand{ font-weight:800; }
+.pase-id{ opacity:.95; font-size:14px; }
+.pase-body{ display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; padding:16px; }
+.pase-col{ display:grid; gap:8px; }
+.pase-label{ font-size:12px; text-transform:uppercase; letter-spacing:.6px; color:#64748b; }
+.pase-value{ font-size:16px; font-weight:700; color:#0f172a; margin-top:-2px; }
+.pase-footer{ padding:12px 16px 16px; border-top:1px dashed #e6eef7; display:flex; justify-content:flex-end; }
+.pase-code{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; color:#334155; }
+
+@media (max-width:560px){
+  .pase-hero-title{ font-size:36px; }
+  .pase-abordaje-container{ padding:20px; }
+  .pase-title{ font-size:24px; }
+  .pase-body{ grid-template-columns:1fr; }
 }
 
-  
-  .pase-abordaje-container button {
-    margin-top: 10px;
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: #0066cc;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .pase {
-    background-color: #fff;
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-  }
-  
-  .pase p {
-    margin: 5px 0;
-  }
-  
+/* ===== Print: solo imprimir el pase ===== */
+@media print{
+  body *{ visibility:hidden; }
+  #area-imprimir,#area-imprimir *{ visibility:visible; }
+  #area-imprimir{ position:absolute; inset:0; margin:0; box-shadow:none; border:none; }
+}

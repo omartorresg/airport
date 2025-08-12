@@ -1,147 +1,140 @@
-/* Contenedor principal */
-.equipaje-container {
-    max-width: 1000px;
-    margin: 24px auto;
-    padding: 0 16px;
-  }
-  
-  /* Card / bloques */
-  .equipaje-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  
-  .equipaje-resumen,
-  .equipaje-form,
-  .equipaje-lista {
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    padding: 16px;
-  }
-  
-  /* Encabezados */
-  .equipaje-container h2 {
-    font-size: 24px;
-    margin-bottom: 12px;
-  }
-  
-  .equipaje-form h3,
-  .equipaje-lista h3 {
-    font-size: 18px;
-    margin-bottom: 12px;
-  }
-  
-  /* Resumen */
-  .equipaje-resumen > div { margin-bottom: 6px; }
-  
-  .badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    vertical-align: middle;
-  }
-  
-  .badge-registrado { background:#eef2ff; color:#3730a3; }   /* azul suave */
-  .badge-facturado  { background:#ecfdf5; color:#065f46; }   /* verde */
-  .badge-entregado  { background:#fff7ed; color:#9a3412; }   /* naranja */
-  
-  /* Acciones */
-  .equipaje-actions {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-  }
-  
-  .equipaje-actions button {
-    appearance: none;
-    border: 0;
-    border-radius: 12px;
-    padding: 10px 14px;
-    font-weight: 600;
-    cursor: pointer;
-    background: #111827;
-    color: #fff;
-    transition: transform .04s ease, opacity .2s ease;
-  }
-  
-  .equipaje-actions button:disabled {
-    opacity: .6;
-    cursor: not-allowed;
-    transform: none;
-  }
-  
-  /* Formulario de maleta */
-  .equipaje-form form {
-    display: grid;
-    gap: 10px;
-  }
-  
-  .equipaje-form label {
-    font-size: 14px;
-    display: grid;
-    gap: 6px;
-  }
-  
-  .equipaje-form input,
-  .equipaje-form select {
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 10px 12px;
-    outline: none;
-  }
-  
-  .equipaje-form input:focus,
-  .equipaje-form select:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
-  }
-  
-  .grid-3 {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  
-  /* Tabla de maletas */
-  .equipaje-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-  
-  .equipaje-table thead th {
-    text-align: left;
-    font-weight: 700;
-    padding: 10px 12px;
-    border-bottom: 2px solid #f3f4f6;
-  }
-  
-  .equipaje-table tbody td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #f3f4f6;
-  }
-  
-  .equipaje-table tbody tr:hover {
-    background: #fafafa;
-  }
-  
-  .equipaje-alert {
-    background: #fef2f2;
-    color: #991b1b;
-    border: 1px solid #fee2e2;
-    border-radius: 12px;
-    padding: 10px 12px;
-    margin-bottom: 12px;
-  }
-  
-  .equipaje-actions button + button {
-    background: #2563eb;
-  }
-  .equipaje-actions button + button:disabled {
-    opacity: .6;
-  }
-  
+/* ===== Contenedor principal (centra y limita el ancho) ===== */
+.equipaje-container{
+  max-width: 980px;
+  margin: 0 auto;           /* centra dentro del layout */
+  padding: 16px 20px;
+  box-sizing: border-box;
+}
+
+.equipaje-alert{
+  background:#fff3cd;
+  border:1px solid #ffecb5;
+  color:#7a5d00;
+  padding:10px 12px;
+  border-radius:12px;
+  margin:10px 0 14px;
+}
+
+/* ===== Tarjeta blanca reutilizable ===== */
+.equipaje-card,
+.equipaje-resumen,
+.equipaje-tarifas,
+.equipaje-form,
+.equipaje-lista{
+  background:#ffffff !important;
+  border:1px solid #e6eef7 !important;
+  border-radius:16px !important;
+  box-shadow:0 14px 28px rgba(17,24,39,.06);
+  padding:16px 18px !important;
+  margin:14px 0 !important;
+  overflow:hidden;          /* evita bordes/“franjas” rojas del fondo */
+  display:block;
+}
+
+/* Título dentro de la primera tarjeta */
+.equipaje-title{
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* ===== Acciones y botones ===== */
+.equipaje-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:10px;
+}
+.equipaje-actions button{
+  height:40px;
+  border:none;
+  border-radius:12px;
+  background:#1666c5;
+  color:#fff;
+  font-weight:700;
+  padding:0 14px;
+  cursor:pointer;
+  transition:filter .15s, transform .05s;
+}
+.equipaje-actions button:hover{ filter:brightness(1.05); }
+.equipaje-actions button:active{ transform:translateY(1px); }
+.equipaje-actions button[disabled]{ opacity:.7; cursor:default; }
+
+/* ===== Badges ===== */
+.badge{ display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:700; }
+.badge-registrado{ background:#e5f3ff; color:#0b60c8; }
+.badge-facturado{ background:#e6f6e6; color:#217a21; }
+.badge-alert{ background:#fff3cd; color:#7a5d00; margin-left:8px; }
+
+/* ===== Tarifas (lista limpia) ===== */
+.equipaje-tarifas .tarifas-lista,
+.equipaje-tarifas ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.equipaje-tarifas .tarifa-item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:8px 0;
+  border-bottom:1px dashed #e6eef7;
+}
+.equipaje-tarifas .tarifa-item:last-child{ border-bottom:0; }
+.equipaje-tarifas .tarifa-total{
+  display:flex;
+  justify-content:space-between;
+  font-weight:800;
+  margin-top:10px;
+}
+.equipaje-tarifas .tarifa-nota{ margin-top:6px; color:#334155; }
+
+/* ===== Formulario “Añadir maleta” ===== */
+.equipaje-form form{ display:grid; gap:12px; }
+.equipaje-form label{ display:flex; flex-direction:column; font-weight:700; color:#0f172a; }
+
+.equipaje-form select,
+.equipaje-form input[type="number"]{
+  height:46px;
+  border-radius:12px;
+  border:1.8px solid rgba(15,23,42,.16);
+  background:#f9fafb;
+  padding:0 14px;
+  font-size:16px;
+  outline:none;
+  transition: box-shadow .15s, border-color .15s, background .15s;
+}
+.equipaje-form select:focus,
+.equipaje-form input[type="number"]:focus{
+  background:#fff;
+  border-color:#2f86f6;
+  box-shadow:0 0 0 4px rgba(47,134,246,.18);
+}
+
+/* ===== Tabla de maletas ===== */
+.equipaje-lista .equipaje-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  background:#fff;
+  border-radius:12px;
+  overflow:hidden;
+}
+.equipaje-table th, .equipaje-table td{
+  padding:12px 10px;
+  border-bottom:1px solid #eef2f7;
+  text-align:left;
+  color:#0f172a;
+}
+.equipaje-table thead th{
+  background:#f3f6fb;
+  font-weight:800;
+}
+.equipaje-table tr:last-child td{ border-bottom:0; }
+
+/* ===== Responsive ===== */
+@media (max-width: 680px){
+  .equipaje-actions{ gap:8px; }
+  .equipaje-table th, .equipaje-table td{ padding:10px 8px; }
+}
