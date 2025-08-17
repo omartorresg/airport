@@ -1,0 +1,172 @@
+/* ===== Variables y layout base ===== */
+:root{
+    --sidebar-w: 250px;            /* ajusta al ancho real de tu sidebar */
+    --card-bg: #ffffff;
+    --card-bd: #e6eef7;
+    --shadow: 0 10px 24px rgba(17,24,39,.06);
+    --hero1: #0b66c3;
+    --hero2: #0a4ea6;
+    --bg1: #ff3c3c;                /* respeta tu fondo rojo */
+    --bg2: #ff5f5f;
+  }
+  
+  /* Contenedor de página */
+  .tablero-container{
+    margin-left: var(--sidebar-w);
+    padding: 16px;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  /* Hero superior */
+  .tablero-hero{
+    background: linear-gradient(135deg, var(--hero1) 0%, var(--hero2) 100%);
+    border-radius: 16px;
+    padding: 18px 20px;
+    color: #fff;
+    box-shadow: 0 14px 28px rgba(17, 24, 39, 0.12);
+  }
+  .tablero-hero-inner{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .tablero-title{ margin: 0; font-size: 22px; font-weight: 700; letter-spacing: .3px; }
+  .tablero-subtitle{ margin: 0; opacity: .9; }
+  
+  /* Grid central */
+  .tablero-grid{
+    width: 100%;
+    max-width: 1200px;       /* unificado */
+    margin: 0 auto;          /* centrado */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  /* Card base reutilizable */
+  .tablero-card{
+    background: var(--card-bg);
+    border: 1px solid var(--card-bd);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 14px 16px;
+  }
+  .tablero-card-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .tablero-card-header h2{
+    font-size: 18px; margin: 0;
+  }
+  
+  /* ===== Tabla genérica ===== */
+  .tabla-wrapper{ overflow-x: auto; }
+  .tabla{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .tabla thead th{
+    background: #f8fbff;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 1px solid #eef3f9;
+  }
+  .tabla th, .tabla td{
+    padding: 10px 12px;
+    white-space: nowrap;
+    border-bottom: 1px solid #eef3f9;
+  }
+  .vacio{ color:#8aa1b5; text-align:center; padding:14px; }
+  
+  /* ===== Chips de estado de vuelo ===== */
+  .chip{
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+    border: 1px solid transparent;
+  }
+  .chip--programado{ background:#eef6ff; color:#0a58b0; border-color:#cfe4ff; }
+  .chip--enhorario{  background:#e7f8ef; color:#1a7f46; border-color:#c8f0da; }
+  .chip--abordando{  background:#fff7e6; color:#a36b00; border-color:#ffe2b3; }
+  .chip--retrasado{  background:#fff0f0; color:#b81e1e; border-color:#ffd2d2; }
+  .chip--cancelado{  background:#f2f2f2; color:#666;     border-color:#e2e2e2; }
+  .chip--salido{     background:#e6f4ff; color:#0a58b0; border-color:#cfe4ff; }
+  .chip--arribado{   background:#e7f8ef; color:#1a7f46; border-color:#c8f0da; }
+  
+  /* ===== Correas (cintas) ===== */
+  .correas-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .correa-item{
+    border: 1px solid var(--card-bd);
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .correa-codigo{
+    font-size: 18px;
+    font-weight: 800;
+    color: #0b66c3;
+    background: #eef6ff;
+    border: 1px solid #cfe4ff;
+    border-radius: 12px;
+    padding: 6px 10px;
+    min-width: 48px;
+    text-align: center;
+  }
+  .correa-detalle{ display: flex; flex-direction: column; gap: 4px; }
+  .correa-ubic{ font-size: 12px; color: #5a6a7b; }
+  .correa-estado{
+    font-size: 12px; font-weight: 700;
+    display: inline-block; padding: 2px 8px;
+    border-radius: 999px; border: 1px solid transparent;
+  }
+  .correa-estado--asignada{ background:#fff7e6; color:#a36b00; border-color:#ffe2b3; }
+  .correa-estado--en_uso{   background:#e7f8ef; color:#1a7f46; border-color:#c8f0da; }
+  
+  .badge-correa{
+    display:inline-block; padding:4px 8px; border-radius:10px;
+    background:#eef6ff; color:#0a58b0; border:1px solid #cfe4ff;
+    font-weight:700; font-size:12px;
+  }
+  .badge-correa--none{ background:#f2f2f2; color:#666; border-color:#e2e2e2; }
+  
+  /* ===== Responsivo ===== */
+  @media (max-width: 1200px){
+    .tablero-container{ padding: 12px; }
+  }
+  @media (max-width: 768px){
+    :root{ --sidebar-w: 72px; } /* si colapsas el menú, aquí se ajusta */
+    .tablero-title{ font-size: 20px; }
+    .tablero-card{ padding: 12px; }
+  }
+  
+/* Retrasado: amarillo */
+.chip--retrasado{
+    background: #fff7e6;   /* fondo amarillo claro */
+    color: #a36b00;        /* texto ámbar */
+    border-color: #ffe2b3;
+  }
+  
+  /* Cancelado: rojo */
+  .chip--cancelado{
+    background: #fff0f0;   /* fondo rojo muy claro */
+    color: #b81e1e;        /* texto rojo */
+    border-color: #ffd2d2;
+  }
+  

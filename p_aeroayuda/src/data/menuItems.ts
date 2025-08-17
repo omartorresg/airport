@@ -9,6 +9,7 @@ import notificacionIcon from "../assets/icons/notificacion.svg";
 import quejasIcon from "../assets/icons/quejas.svg";
 import securityIcon from "../assets/icons/security.svg";
 import dashboardIcon from "../assets/icons/dashboard.svg";
+import AvionIconoDashboard from "../assets/icons/AvionIcono.svg";
 import Quejas from "../componentes/FormQueja";
 
 
@@ -16,6 +17,11 @@ export const menuItems: MenuItem[] = [{
     label: "Tablero Operativo",
     icon: dashboardIcon,
     path: "/paginas/Tablero",
+  },
+  {
+    label: "Tablero Vuelos",
+    icon: dashboardIcon,
+    path: "/paginas/Tablero_Vuelos",
   },
   {
     label: "Migración y Aduanas",
