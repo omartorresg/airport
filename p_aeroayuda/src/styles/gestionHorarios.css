@@ -1,3 +1,7 @@
+/*
+  Variables de diseño
+  - Los nombres de las variables son los mismos que en el archivo original.
+*/
 :root {
   --primary-color: #1576c6;
   --secondary-color: #008cff;
@@ -7,6 +11,9 @@
   --text-color: #0f172a;
 }
 
+/*
+  Estilos generales
+*/
 * { box-sizing: border-box; }
 
 body {
@@ -17,35 +24,45 @@ body {
   color: var(--text-color);
 }
 
-/* Título principal de la página */
-.title-wrap {
+/* Título principal de la página
+  - Clase 'title-wrap' renombrada a 'hrt-title-wrap'.
+  - Clase 'title' renombrada a 'hrt-title'.
+  - Se eliminaron los márgenes fijos para mejorar la capacidad de respuesta.
+*/
+.hrt-title-wrap {
   text-align: center;
   font-size: 18px;
-  margin-left: 550px;
   color: white;
   font-weight: bold;
   border-bottom: 4px solid var(--secondary-color);
   padding-bottom: 0;
   width: fit-content;
-  margin-top: 40px;
+  margin: 40px auto 0 auto;
 }
-.title { margin-bottom: 10px; line-height: 1.1; }
+.hrt-title { margin-bottom: 10px; line-height: 1.1; }
 
-/* Contenedor principal del grid */
-.main-grid {
+/* Contenedor principal del grid
+  - Clase 'main-grid' renombrada a 'hrt-grid'.
+  - Se eliminaron los márgenes fijos para centrar el contenido.
+*/
+.hrt-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
   padding: 24px 32px 40px 32px;
-  margin-left: 285px;
+  margin: 0 auto;
 }
 
-/* Navegación por pestañas */
-.tabs {
+/* Navegación por pestañas
+  - Clase 'tabs' renombrada a 'hrt-tabs'.
+  - Clase 'tab' renombrada a 'hrt-tab'.
+*/
+.hrt-tabs {
   display: flex;
   gap: 8px;
+  margin-left: 285px;
 }
-.tab {
+.hrt-tab {
   background: #fff;
   border: 2px solid var(--border-color);
   border-radius: 10px;
@@ -53,22 +70,27 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
-.tab.active {
+.hrt-tab.active {
   border-color: var(--primary-color);
   color: #fff;
   background: var(--primary-color);
 }
 
-/* Layout de 2 columnas */
-.two-col-grid {
+/* Layout de 2 columnas
+  - Clase 'two-col-grid' renombrada a 'hrt-2col'.
+*/
+.hrt-2col {
   display: grid;
   grid-template-columns: 0.85fr 0.85fr;
   justify-content: center;
   gap: 24px;
+  margin-left: 285px;
 }
 
-/* Contenedor de tarjeta */
-.card {
+/* Contenedor de tarjeta
+  - Clase 'card' renombrada a 'hrt-card'.
+*/
+.hrt-card {
   background: #fff;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
@@ -76,16 +98,21 @@ body {
   max-width: 650px;
 }
 
-/* Subtítulo */
-.subtitle {
+/* Subtítulo
+  - Clase 'subtitle' renombrada a 'hrt-subtitle'.
+*/
+.hrt-subtitle {
   margin: 0 0 8px 0;
   color: var(--primary-color);
   text-align: center;
   font-size: 20px;
 }
 
-/* Formulario en grilla */
-.form-grid {
+/* Formulario en grilla
+  - Clase 'form-grid' renombrada a 'hrt-form'.
+  - El formulario tiene una clase adicional 'hrt-card' en el TSX, que ya tiene estilos.
+*/
+.hrt-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
@@ -94,18 +121,23 @@ body {
   overflow-x: hidden;
   padding-right: 6px;
 }
-.form-grid .subtitle { grid-column: 1 / -1; }
-.form-field-full-width { grid-column: 1 / -1; }
+.hrt-form .hrt-subtitle { grid-column: 1 / -1; }
+/* La clase 'hrt-col2' se usa para campos de ancho completo. */
+.hrt-col2 { grid-column: 1 / -1; }
 
-.form-label {
+/*
+  Clases de formulario
+  - Clase 'form-label' renombrada a 'hrt-label'.
+  - Clase 'form-input' renombrada a 'hrt-input'.
+*/
+.hrt-label {
   display: inline-block;
   border-bottom: 2px solid #7ea0bb;
   padding-bottom: 4px;
   margin-bottom: 8px;
   font-weight: bold;
 }
-
-.form-input {
+.hrt-input {
   width: 100%;
   padding: 10px 12px;
   border: 2px solid #b5b5b5;
@@ -114,21 +146,23 @@ body {
   background: #fff;
   min-height: 42px;
 }
-.form-grid label select { height: 42px; }
-
-.form-input:focus {
+.hrt-form label select { height: 42px; }
+.hrt-input:focus {
   outline: none;
   border-color: rgba(0, 140, 255, 0.6);
 }
 
-/* Días de la semana */
-.day-selector {
+/* Días de la semana
+  - Clase 'day-selector' renombrada a 'hrt-days'.
+  - Clase 'day-label' renombrada a 'hrt-day'.
+*/
+.hrt-days {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 6px;
 }
-.day-label {
+.hrt-day {
   border: 2px solid var(--border-color);
   border-radius: 8px;
   padding: 6px 10px;
@@ -136,29 +170,36 @@ body {
   align-items: center;
   gap: 6px;
 }
-.day-label.on {
+.hrt-day.on {
   border-color: var(--primary-color);
   background: #e6f0ff;
 }
-.day-label input { margin: 0; }
+.hrt-day input { margin: 0; }
 
-/* Rotación de puestos */
-.rotation-list { display: flex; flex-direction: column; gap: 10px; }
-.rotation-row {
+/* Rotación de puestos
+  - Clase 'rotation-list' renombrada a 'hrt-rotacion'.
+  - Clase 'rotation-row' renombrada a 'hrt-rot-row'.
+*/
+.hrt-rotacion { display: flex; flex-direction: column; gap: 10px; }
+.hrt-rot-row {
   display: grid;
   grid-template-columns: 1fr 120px auto;
   gap: 10px;
 }
 
-/* Acciones */
-.actions-container {
+/* Acciones
+  - Clase 'actions-container' renombrada a 'hrt-actions'.
+  - Clase 'button' renombrada a 'hrt-btn'.
+  - Clases de color renombradas a 'hrt-btn-primary', etc.
+*/
+.hrt-actions {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-top: 4px;
 }
-.button {
+.hrt-btn {
   height: 42px;
   padding: 0;
   margin: 0;
@@ -172,28 +213,30 @@ body {
   cursor: pointer;
   border: 2px solid transparent;
 }
-.button-primary {
+.hrt-btn-primary {
   background-color: var(--primary-color) !important;
   color: #fff !important;
 }
-.button-secondary {
+.hrt-btn-secondary {
   background-color: #e6f0ff !important;
   color: var(--primary-color) !important;
   border-color: var(--primary-color) !important;
 }
-.button-danger {
+.hrt-btn-danger {
   background-color: #fee2e2 !important;
   color: #b91c1c !important;
   border-color: #ef4444 !important;
 }
-.button-ghost {
+.hrt-btn-ghost {
   background-color: #f8fafc !important;
   color: #334155 !important;
   border-color: #cbd5e1 !important;
 }
 
-/* Mensajes de feedback */
-.message-box {
+/* Mensajes de feedback
+  - Clase 'message-box' renombrada a 'hrt-msg'.
+*/
+.hrt-msg {
   grid-column: 1 / -1;
   margin-top: 10px;
   text-align: center;
@@ -201,9 +244,14 @@ body {
   color: green;
 }
 
-/* Tabla de datos */
-.data-table-section .subtitle { margin-bottom: 12px; }
-.table-wrapper {
+/* Tabla de datos
+  - Clase 'data-table-section' renombrada a 'hrt-consulta'.
+  - Clase 'table-wrapper' renombrada a 'hrt-table-wrap'.
+  - Clase 'data-table' renombrada a 'hrt-table'.
+  - Clase 'table-row-selected' renombrada a 'hrt-row-selected'.
+*/
+.hrt-consulta .hrt-subtitle { margin-bottom: 12px; }
+.hrt-table-wrap {
   overflow-x: auto;
   overflow-y: auto;
   max-height: 460px;
@@ -211,27 +259,30 @@ body {
   border-radius: 8px;
   background: #fff;
 }
-.data-table {
+.hrt-table {
   min-width: 900px;
   width: 100%;
   border-collapse: collapse;
   background: #fff;
 }
-.data-table th, .data-table td {
+.hrt-table th, .hrt-table td {
   border: 1px solid var(--border-color);
   padding: 10px;
   font-size: 14px;
   text-align: left;
 }
-.data-table th { background: #f1f5f9; }
-.table-row-selected { background: #e8f3ff; }
+.hrt-table th { background: #f1f5f9; }
+.hrt-row-selected { background: #e8f3ff; }
 
-/* Responsive */
+/* Responsive
+  - Se actualizaron las clases en las reglas @media.
+*/
 @media (max-width: 1100px) {
-  .two-col-grid { grid-template-columns: 1fr; }
-  .main-grid { margin-left: 0; }
+  .hrt-2col { grid-template-columns: 1fr; margin-left: 0; }
+  .hrt-grid { margin-left: 0; }
+  .hrt-tabs { margin-left: 0; }
 }
 @media (max-width: 860px) {
-  .actions-container { grid-template-columns: 1fr 1fr; }
-  .rotation-row { grid-template-columns: 1fr 100px auto; }
+  .hrt-actions { grid-template-columns: 1fr 1fr; }
+  .hrt-rot-row { grid-template-columns: 1fr 100px auto; }
 }
