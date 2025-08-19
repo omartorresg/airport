@@ -24,6 +24,7 @@ import PanelQuejas from "../paginas/PanelPrioridadQuejas"
 import DisponibilidadPersonal from "../paginas/DisponibilidadPersonal"
 import { useLocation } from "react-router-dom";
 import GestionEquipaje from "../paginas/GestionEquipaje";
+import TableroVuelos from "../paginas/Tablero_Vuelos";
 
 
 // 👇 Wrapper que lee idPersona e idTicket desde location.state
@@ -76,6 +77,7 @@ export default function AppRoutes() {
         <Route path="/paginas/PanelPrioridadQuejas" element={<PanelQuejas />} />
         <Route path="/paginas/DisponibilidadPersonal" element={<DisponibilidadPersonal />} />
         <Route path="/paginas/GestionEquipaje" element={<GestionEquipajeRoute />} />
+        <Route path="/paginas/Tablero_Vuelos" element={<TableroVuelos />} />
         
       </Route>
     </Routes>
