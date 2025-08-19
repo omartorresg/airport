@@ -79,18 +79,21 @@ export default function CheckIn() {
   const navigate = useNavigate();
 
   // Lee id_ticket del pasajero
-  const obtenerIdTicket = async (idPersona: number) => {
-    const { data, error } = await supabase
-      .from("pasajero")
-      .select("id_ticket")
-      .eq("id_persona", idPersona)
-      .maybeSingle();
-    if (error) {
-      console.warn("No se pudo leer id_ticket del pasajero:", error.message);
-      return null;
-    }
-    return (data as any)?.id_ticket ?? null;
-  };
+// ahora: léelo desde TICKET por id_reserva
+
+const obtenerIdTicketPorReserva = async (idReserva: number) => {
+  const { data, error } = await supabase
+    .from("ticket")
+    .select("id_ticket")
+    .eq("id_reserva", idReserva)
+    .maybeSingle();
+  if (error && error.code !== "PGRST116") {
+    console.warn("ticket:", error.message);
+    return null;
+  }
+  return (data as any)?.id_ticket ?? null;
+};
+
 
   // Busca o crea registro de equipaje
   const getOrCreateEquipaje = async (
@@ -297,17 +300,17 @@ export default function CheckIn() {
       });
 
       // 6) Ticket del pasajero
-      const idTicket = await obtenerIdTicket(r.pasajero.id_persona);
-      setIdTicketActual(idTicket);
+      // 6) Ticket de la reserva (NO desde pasajero)
+const idTicket = await obtenerIdTicketPorReserva(r.id_reserva);
+setIdTicketActual(idTicket);
 
-      // 7) Buscar o crear equipaje y dejar listo el botón
-      if (idTicket != null) {
-        const row = await getOrCreateEquipaje(
-          r.pasajero.id_persona,
-          idTicket
-        );
-        setEquipajeId(row?.id_equipaje ?? null);
-      }
+// 7) Buscar o crear encabezado de equipaje
+if (idTicket != null) {
+  const row = await getOrCreateEquipaje(r.pasajero.id_persona, idTicket);
+  setEquipajeId(row?.id_equipaje ?? null);
+}
+await verificarEquipajeParaCheckin(r.pasajero.id_persona, idTicket);
+
 
       // 8) Validación de equipaje para el check-in
       await verificarEquipajeParaCheckin(r.pasajero.id_persona, idTicket);
