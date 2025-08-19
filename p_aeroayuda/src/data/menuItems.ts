@@ -74,7 +74,7 @@ export const menuItems: MenuItem[] = [{
     path: "/gestion",
     subItems: [
       { label: "Registro de Personal", path: "/paginas/RegistroPersonal" },
-      { label: "Horarios y Turnos", path: "/gestion/turnos" },
+      { label: "Horarios y Turnos", path: "/paginas/GestionHorarios" },
       { label: "Asignación de Tareas", path: "/gestion/asignacion" },
       { label: "Capacitación y Certificación", path: "/gestion/capacitacion" },
       { label: "Evaluación de Desempeño", path: "/gestion/evaluacion" },
@@ -112,8 +112,7 @@ export const menuItems: MenuItem[] = [{
     path: "/seguridad",
     subItems: [
       { label: "Verificación del Pase", path: "/paginas/ControlSeguridad" },
-      { label: "Control de Acceso", path: "/seguridad/acceso" },
-      { label: "Inspección Equipaje Mano", path: "/seguridad/equipaje" },
+      { label: "Inspección Equipaje Mano", path: "/paginas/InspeccionEquipaje" },
       { label: "Inspección del Pasajero", path: "/seguridad/pasajero" },
       { label: "Registro de Incidencias", path: "/seguridad/incidencias" },
       { label: "Autorización Final", path: "/seguridad/autorizacion" },

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../SupabaseClient';
-import '../styles/clasificacion.css';
+import '../styles/clasificacion.css'; // Importa los estilos del otro componente
 
 type EmergenciaRow = {
   id_emergencia: number;
@@ -16,6 +16,19 @@ type EmergenciaRow = {
   nombre_zona: string;
   coordenada_x: number | null;
   coordenada_y: number | null;
+  afectado_tipo?: 'general' | 'pasajero' | 'empleado';
+  id_pasajero?: number | null;
+  id_personal?: number | null;
+};
+
+type Pasajero = {
+  id_persona: number;
+  nombre: string;
+  documento?: string | null;
+};
+type Empleado = {
+  id_personal: number;
+  nombre: string;
 };
 
 type TipoEmergencia = { id_tipo_emergencia: number; nombre: string };
@@ -41,6 +54,13 @@ export default function ClasificacionEmergencias() {
   const [listado, setListado] = useState<EmergenciaRow[]>([]);
   const [filtro, setFiltro] = useState({ tipo: '', severidad: '', fecha: '', hora: '', id_zona: '' });
 
+  const [afectadoTipo, setAfectadoTipo] = useState<'general' | 'pasajero' | 'empleado'>('general');
+  const [idPasajero, setIdPasajero] = useState('');
+  const [idPersonal, setIdPersonal] = useState('');
+
+  const [pasajerosDB, setPasajerosDB] = useState<Pasajero[]>([]);
+  const [empleadosDB, setEmpleadosDB] = useState<Empleado[]>([]);
+
   // UI
   const [mensaje, setMensaje] = useState('');
   const [seleccionId, setSeleccionId] = useState<number | null>(null);
@@ -53,6 +73,26 @@ export default function ClasificacionEmergencias() {
       setTiposEmergenciaDB((tipos || []) as TipoEmergencia[]);
       setNivelesDB((niveles || []) as Nivel[]);
       setZonasDB((zonas || []) as Zona[]);
+
+      const { data: empleados } = await supabase
+        .from('personal_operativo')
+        .select('id_personal,nombre')
+        .order('nombre');
+      setEmpleadosDB((empleados || []) as Empleado[]);
+
+      const { data: pax } = await supabase
+        .from('pasajero')
+        .select('id_persona, persona:persona (nombre, apellido, numero_documento)')
+        .order('id_persona', { ascending: false });
+
+      const pas = (pax || []).map((p: any) => ({
+        id_persona: p.id_persona,
+        nombre: [p.persona?.nombre, p.persona?.apellido].filter(Boolean).join(' ') || `ID ${p.id_persona}`,
+        documento: p.persona?.numero_documento || null
+      })) as Pasajero[];
+
+      setPasajerosDB(pas);
+
       await cargarListado();
     };
     cargarDatos();
@@ -63,9 +103,12 @@ export default function ClasificacionEmergencias() {
       .from('emergencias')
       .select(`
         id_emergencia, id_tipo, id_nivel, descripcion, fecha_hora, id_zona, coordenada_x, coordenada_y, activacion_manual,
+        afectado_tipo, id_pasajero, id_personal,
         tipos_emergencia:tipos_emergencia (nombre, id_tipo_emergencia),
         niveles_severidad:niveles_severidad (nombre, id_nivel),
-        zonas:zonas (id_zona, nombre_zona)
+        zonas:zonas (id_zona, nombre_zona),
+        pasajero:pasajero!left(id_persona, persona:persona(nombre, apellido)),
+        personal_operativo:personal_operativo!left(id_personal, nombre)
       `)
       .order('id_emergencia', { ascending: false });
 
@@ -84,7 +127,10 @@ export default function ClasificacionEmergencias() {
       id_zona: e.id_zona,
       nombre_zona: e.zonas?.nombre_zona || '',
       coordenada_x: e.coordenada_x,
-      coordenada_y: e.coordenada_y
+      coordenada_y: e.coordenada_y,
+      afectado_tipo: e.afectado_tipo,
+      id_pasajero: e.id_pasajero,
+      id_personal: e.id_personal
     }));
     setListado(rows);
   };
@@ -100,6 +146,8 @@ export default function ClasificacionEmergencias() {
     if (!tipoEmergencia || !severidad || !fecha || !hora || !idZona) return 'Completa tipo, severidad, fecha, hora y zona.';
     if (!descripcion.trim()) return 'La descripción es obligatoria.';
     if (!coordenadas) return 'Debes marcar coordenadas en el mapa.';
+    if (afectadoTipo === 'pasajero' && !idPasajero) return 'Selecciona el pasajero afectado.';
+    if (afectadoTipo === 'empleado' && !idPersonal) return 'Selecciona el empleado afectado.';
     return '';
   };
 
@@ -118,6 +166,9 @@ export default function ClasificacionEmergencias() {
     setIdZona('');
     setDescripcion('');
     setCoordenadas(null);
+    setAfectadoTipo('general');
+    setIdPasajero('');
+    setIdPersonal('');
     setSeleccionId(null);
     setMensaje('');
   };
@@ -132,7 +183,8 @@ export default function ClasificacionEmergencias() {
     if (!id_tipo || !id_nivel || !zona_id) { setMensaje('❌ Selección inválida de tipo, severidad o zona.'); return; }
 
     const fecha_hora = `${fecha}T${hora}`;
-    const { error } = await supabase.from('emergencias').insert({
+
+    const payload: any = {
       id_tipo,
       id_nivel,
       id_zona: zona_id,
@@ -140,8 +192,17 @@ export default function ClasificacionEmergencias() {
       fecha_hora,
       coordenada_x: coordenadas!.x,
       coordenada_y: coordenadas!.y,
-      activacion_manual: true
-    });
+      activacion_manual: true,
+      afectado_tipo: afectadoTipo,
+      id_pasajero: null,
+      id_personal: null
+    };
+
+    if (afectadoTipo === 'pasajero') payload.id_pasajero = Number(idPasajero);
+    if (afectadoTipo === 'empleado') payload.id_personal = Number(idPersonal);
+
+    const { error } = await supabase.from('emergencias').insert(payload);
+
     if (error) { setMensaje('❌ Error al registrar: ' + error.message); return; }
 
     setMensaje('✅ Emergencia registrada correctamente.');
@@ -157,6 +218,9 @@ export default function ClasificacionEmergencias() {
     setHora(r.hora);
     setIdZona(String(r.id_zona));
     setDescripcion(r.descripcion || '');
+    setAfectadoTipo(r.afectado_tipo || 'general');
+    setIdPasajero(r.id_pasajero ? String(r.id_pasajero) : '');
+    setIdPersonal(r.id_personal ? String(r.id_personal) : '');
     if (r.coordenada_x !== null && r.coordenada_y !== null) setCoordenadas({ x: r.coordenada_x, y: r.coordenada_y });
     else setCoordenadas(null);
     setMensaje('ℹ️ Modo edición: puedes modificar o eliminar el registro.');
@@ -172,17 +236,25 @@ export default function ClasificacionEmergencias() {
     if (!id_tipo || !id_nivel || !zona_id) { setMensaje('❌ Selección inválida de tipo, severidad o zona.'); return; }
 
     const fecha_hora = `${fecha}T${hora}`;
+    const payload: any = {
+      id_tipo,
+      id_nivel,
+      id_zona: zona_id,
+      descripcion: descripcion.trim(),
+      fecha_hora,
+      coordenada_x: coordenadas!.x,
+      coordenada_y: coordenadas!.y,
+      afectado_tipo: afectadoTipo,
+      id_pasajero: null,
+      id_personal: null
+    };
+
+    if (afectadoTipo === 'pasajero') payload.id_pasajero = Number(idPasajero);
+    if (afectadoTipo === 'empleado') payload.id_personal = Number(idPersonal);
+
     const { error } = await supabase
       .from('emergencias')
-      .update({
-        id_tipo,
-        id_nivel,
-        id_zona: zona_id,
-        descripcion: descripcion.trim(),
-        fecha_hora,
-        coordenada_x: coordenadas!.x,
-        coordenada_y: coordenadas!.y
-      })
+      .update(payload)
       .eq('id_emergencia', seleccionId);
 
     if (error) { setMensaje('❌ Error al modificar: ' + error.message); return; }
@@ -215,51 +287,51 @@ export default function ClasificacionEmergencias() {
 
   return (
     <>
-      <div className="emg-title-wrap"><h1 className="emg-title">Registro / Clasificación de Emergencias</h1></div>
+      <div className="titulo-personal"><h1 className="emg-title">Registro / Clasificación de Emergencias</h1></div>
 
-      <div className="emg-grid">
+      <div className="contenedor-perso">
         {/* Formulario */}
-        <form className="emg-card emg-form" onSubmit={(e) => { e.preventDefault(); registrar(); }}>
-          <h2 className="emg-subtitle">Datos de la Emergencia</h2>
+        <form className="contenedor-personal registrar-personal" onSubmit={(e) => { e.preventDefault(); registrar(); }}>
+          <h2 className="subtitulo">Datos de la Emergencia</h2>
 
           <label>
-            <span className="emg-label">Tipo de Emergencia</span>
-            <select className="emg-input" value={tipoEmergencia} onChange={(e) => setTipoEmergencia(e.target.value)}>
+            <span className="etiqueta">Tipo de Emergencia</span>
+            <select className="input-personal" value={tipoEmergencia} onChange={(e) => setTipoEmergencia(e.target.value)}>
               <option value="">Seleccione</option>
               {tiposEmergenciaDB.map(t => <option key={t.id_tipo_emergencia} value={t.nombre}>{t.nombre}</option>)}
             </select>
           </label>
 
           <label>
-            <span className="emg-label">Nivel de Severidad</span>
-            <select className="emg-input" value={severidad} onChange={(e) => setSeveridad(e.target.value)}>
+            <span className="etiqueta">Nivel de Severidad</span>
+            <select className="input-personal" value={severidad} onChange={(e) => setSeveridad(e.target.value)}>
               <option value="">Seleccione</option>
               {nivelesDB.map(n => <option key={n.id_nivel} value={n.nombre}>{n.nombre}</option>)}
             </select>
           </label>
 
           <label>
-            <span className="emg-label">Fecha</span>
-            <input type="date" className="emg-input" value={fecha} onChange={(e) => setFecha(e.target.value)} />
+            <span className="etiqueta">Fecha</span>
+            <input type="date" className="input-personal" value={fecha} onChange={(e) => setFecha(e.target.value)} />
           </label>
 
           <label>
-            <span className="emg-label">Hora</span>
-            <input type="time" className="emg-input" value={hora} onChange={(e) => setHora(e.target.value)} />
+            <span className="etiqueta">Hora</span>
+            <input type="time" className="input-personal" value={hora} onChange={(e) => setHora(e.target.value)} />
           </label>
 
-          <label className="emg-col2">
-            <span className="emg-label">Zona</span>
-            <select className="emg-input" value={idZona} onChange={(e)=>setIdZona(e.target.value)}>
+          <label>
+            <span className="etiqueta">Zona</span>
+            <select className="input-personal" value={idZona} onChange={(e) => setIdZona(e.target.value)}>
               <option value="">Seleccione una zona</option>
               {zonasDB.map(z => <option key={z.id_zona} value={z.id_zona}>{z.nombre_zona}</option>)}
             </select>
           </label>
 
-          <label className="emg-col2">
-            <span className="emg-label">Descripción</span>
+          <label>
+            <span className="etiqueta">Descripción</span>
             <textarea
-              className="emg-input"
+              className="input-personal"
               rows={3}
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
@@ -267,8 +339,48 @@ export default function ClasificacionEmergencias() {
             />
           </label>
 
-          <div className="emg-col2">
-            <span className="emg-label">Ubicación en mapa</span>
+          <div className="panel panel-contacto">
+            <h3>Afectado</h3>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+              <label className="chk">
+                <input type="radio" name="afectado" checked={afectadoTipo === 'general'} onChange={() => { setAfectadoTipo('general'); setIdPasajero(''); setIdPersonal(''); }} />
+                General
+              </label>
+              <label className="chk">
+                <input type="radio" name="afectado" checked={afectadoTipo === 'pasajero'} onChange={() => { setAfectadoTipo('pasajero'); setIdPersonal(''); }} />
+                Pasajero
+              </label>
+              <label className="chk">
+                <input type="radio" name="afectado" checked={afectadoTipo === 'empleado'} onChange={() => { setAfectadoTipo('empleado'); setIdPasajero(''); }} />
+                Empleado
+              </label>
+            </div>
+            {afectadoTipo === 'pasajero' && (
+              <label>
+                <select className="input-personal" value={idPasajero} onChange={e => setIdPasajero(e.target.value)}>
+                  <option value="">Seleccione pasajero</option>
+                  {pasajerosDB.map(p => (
+                    <option key={p.id_persona} value={p.id_persona}>
+                      {p.nombre}{p.documento ? ` · ${p.documento}` : ''}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            {afectadoTipo === 'empleado' && (
+              <label>
+                <select className="input-personal" value={idPersonal} onChange={e => setIdPersonal(e.target.value)}>
+                  <option value="">Seleccione empleado</option>
+                  {empleadosDB.map(emp => (
+                    <option key={emp.id_personal} value={emp.id_personal}>{emp.nombre}</option>
+                  ))}
+                </select>
+              </label>
+            )}
+          </div>
+
+          <div className="panel panel-contacto">
+            <h3>Ubicación</h3>
             <div className="emg-map-wrap">
               <img
                 src="/mapa_aeropuerto.png"
@@ -276,48 +388,54 @@ export default function ClasificacionEmergencias() {
                 className="emg-map"
                 onClick={manejarClickMapa}
               />
+              {coordenadas && (
+                <div
+                  className="emg-pin"
+                  style={{ left: `${coordenadas.x}%`, top: `${coordenadas.y}%` }}
+                />
+              )}
             </div>
             {coordenadas && (
-              <input className="emg-input" value={`X: ${coordenadas.x}%, Y: ${coordenadas.y}%`} readOnly />
+              <input className="input-personal" value={`X: ${coordenadas.x}%, Y: ${coordenadas.y}%`} readOnly />
             )}
           </div>
-
-          <div className="emg-actions">
-            <button type="button" className="emg-btn emg-btn-primary" onClick={registrar}>Registrar</button>
-            <button type="button" className="emg-btn emg-btn-secondary" onClick={modificar}>Modificar</button>
-            <button type="button" className="emg-btn emg-btn-danger" onClick={eliminar}>Eliminar</button>
-            <button type="button" className="emg-btn emg-btn-ghost" onClick={limpiar}>Limpiar</button>
+          
+          <div className="acciones-form">
+            <button type="button" className="boton-verificar ancho-total" onClick={registrar}>Registrar</button>
+            <button type="button" className="boton-secundario ancho-total" onClick={modificar}>Modificar</button>
+            <button type="button" className="boton-peligro ancho-total" onClick={eliminar}>Eliminar</button>
+            <button type="button" className="boton-terciario ancho-total" onClick={limpiar}>Limpiar</button>
           </div>
 
-          {mensaje && <div className="emg-msg">{mensaje}</div>}
+          {mensaje && <div className="resultado-ok">{mensaje}</div>}
         </form>
 
         {/* Consulta */}
-        <div className="emg-card emg-consulta">
-          <h2 className="emg-subtitle">Consulta / Selección</h2>
+        <div className="panel panel-consulta">
+          <h2 className="subtitulo">Consulta / Selección</h2>
 
-          <div className="emg-filters">
-            <select className="emg-input" value={filtro.tipo} onChange={(e)=>setFiltro(prev=>({...prev, tipo: e.target.value}))}>
+          <div className="filter-row">
+            <select className="input-personal" value={filtro.tipo} onChange={(e) => setFiltro(prev => ({ ...prev, tipo: e.target.value }))}>
               <option value="">Tipo</option>
               {tiposEmergenciaDB.map(t => <option key={t.id_tipo_emergencia} value={t.nombre}>{t.nombre}</option>)}
             </select>
 
-            <select className="emg-input" value={filtro.severidad} onChange={(e)=>setFiltro(prev=>({...prev, severidad: e.target.value}))}>
+            <select className="input-personal" value={filtro.severidad} onChange={(e) => setFiltro(prev => ({ ...prev, severidad: e.target.value }))}>
               <option value="">Severidad</option>
               {nivelesDB.map(n => <option key={n.id_nivel} value={n.nombre}>{n.nombre}</option>)}
             </select>
 
-            <select className="emg-input" value={filtro.id_zona} onChange={(e)=>setFiltro(prev=>({...prev, id_zona: e.target.value}))}>
+            <select className="input-personal" value={filtro.id_zona} onChange={(e) => setFiltro(prev => ({ ...prev, id_zona: e.target.value }))}>
               <option value="">Zona</option>
               {zonasDB.map(z => <option key={z.id_zona} value={z.id_zona}>{z.nombre_zona}</option>)}
             </select>
 
-            <input type="date" className="emg-input" value={filtro.fecha} onChange={(e)=>setFiltro(prev=>({...prev, fecha: e.target.value}))} />
-            <input type="time" className="emg-input" value={filtro.hora} onChange={(e)=>setFiltro(prev=>({...prev, hora: e.target.value}))} />
+            <input type="date" className="input-personal" value={filtro.fecha} onChange={(e) => setFiltro(prev => ({ ...prev, fecha: e.target.value }))} />
+            <input type="time" className="input-personal" value={filtro.hora} onChange={(e) => setFiltro(prev => ({ ...prev, hora: e.target.value }))} />
           </div>
 
-          <div style={{overflowX:'auto', border:'1px solid #e5e7eb', borderRadius:8}}>
-            <table className="emg-table" style={{minWidth: 900}}>
+          <div style={{ overflowX: 'auto', border: '1px solid #e5e7eb', borderRadius: 8 }}>
+            <table className="result-table">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -327,6 +445,7 @@ export default function ClasificacionEmergencias() {
                   <th>Fecha</th>
                   <th>Hora</th>
                   <th>Coordenadas</th>
+                  <th>Afectado</th>
                   <th>Descripción</th>
                 </tr>
               </thead>
@@ -334,8 +453,8 @@ export default function ClasificacionEmergencias() {
                 {listadoFiltrado.map((r) => (
                   <tr
                     key={r.id_emergencia}
-                    className={r.id_emergencia === seleccionId ? 'emg-row-selected' : ''}
-                    onClick={()=> seleccionarFila(r)}
+                    className={r.id_emergencia === seleccionId ? 'fila-seleccionada' : ''}
+                    onClick={() => seleccionarFila(r)}
                     style={{ cursor: 'pointer' }}
                   >
                     <td>{r.id_emergencia}</td>
@@ -344,12 +463,17 @@ export default function ClasificacionEmergencias() {
                     <td>{r.nombre_zona}</td>
                     <td>{r.fecha}</td>
                     <td>{r.hora}</td>
-                    <td>{(r.coordenada_x!==null && r.coordenada_y!==null) ? `${r.coordenada_x}%, ${r.coordenada_y}%` : ''}</td>
+                    <td>{(r.coordenada_x !== null && r.coordenada_y !== null) ? `${r.coordenada_x}%, ${r.coordenada_y}%` : ''}</td>
+                    <td>
+                      {r.afectado_tipo === 'general' ? 'General' :
+                        r.afectado_tipo === 'pasajero' ? 'Pasajero' :
+                          'Empleado'}
+                    </td>
                     <td>{r.descripcion}</td>
                   </tr>
                 ))}
                 {listadoFiltrado.length === 0 && (
-                  <tr><td colSpan={8} style={{ textAlign: 'center', padding: 12 }}>Sin resultados</td></tr>
+                  <tr><td colSpan={9} style={{ textAlign: 'center', padding: 12 }}>Sin resultados</td></tr>
                 )}
               </tbody>
             </table>

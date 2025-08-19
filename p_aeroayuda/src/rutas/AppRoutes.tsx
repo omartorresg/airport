@@ -5,6 +5,8 @@ import ControlSeguridad from "../paginas/ControlSeguridad";
 import Quejas from "../paginas/FormQuejas";
 import CheckIn from "../paginas/Checkin";
 import Login from "../paginas/Login";
+import GestionHorarios from "../paginas/GestionHorarios";
+import InspeccionEquipaje from "../paginas/InspeccionEquipaje";
 import Tablero from "../paginas/Tablero";
 import Protocolo from "../paginas/Protocolo";
 import RegistroPersonal from "../paginas/RegistroPersonal";
@@ -57,12 +59,14 @@ export default function AppRoutes() {
         <Route path="/paginas/Tablero" element={<Tablero />} />
         
         <Route path="/paginas/Quejas" element={<Quejas />} />
+        <Route path="/paginas/InspeccionEquipaje" element={<InspeccionEquipaje />} />
         <Route path="/paginas/EvacuaFlujo" element={<EvacuaFlujo />} />
         <Route path="/paginas/Checkin" element={<CheckIn />} />
         <Route path="/paginas/RegistroPersonal" element={<RegistroPersonal />} />
         <Route path="/paginas/AsignacionRoles" element={<AsignacionRoles />} />
         <Route path="paginas/ClasificacionRegistro" element={<ClasificacionRegistro />} />
         <Route path="paginas/Protocolo" element={<Protocolo />} />
+        <Route path="paginas/GestionHorarios" element={<GestionHorarios />} />
         <Route path="paginas/Bitacora" element={<Bitacora />} />
         <Route path="paginas/Comunicacion" element={<Comunicacion />} />
         <Route path="/quejas/ReporteQuejas" element={<ReporteQuejas />} />
