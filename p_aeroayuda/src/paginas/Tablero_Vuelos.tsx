@@ -3,38 +3,17 @@ import { supabase } from "../SupabaseClient";
 import "../styles/TableroVuelos.css";
 
 /**
- * Requiere esta vista en BD (ya te la pasé):
- *
- * create or replace view public.llegadas_con_correa_ext as
- * select
- *   v.id_vuelo, v.origen, v.destino,
- *   v.fecha_hora_salida, v.fecha_hora_llegada, v.estado,
- *   (
- *     select c.codigo
- *     from public.asignacion_correa ac
- *     join public.correas_equipaje c on c.id_correa = ac.id_correa
- *     where ac.id_vuelo = v.id_vuelo and ac.estado in ('asignada','en_uso')
- *     order by ac.id_asignacion desc
- *     limit 1
- *   ) as correa
- * from public.vuelo v
- * where
- *   v.fecha_hora_llegada between now() - interval '12 hours' and now() + interval '36 hours'
- *   or exists (
- *     select 1 from public.asignacion_correa ac
- *     where ac.id_vuelo = v.id_vuelo and ac.estado in ('asignada','en_uso')
- *   );
- *
- * grant select on public.llegadas_con_correa_ext to anon, authenticated;
+ * Vista usada para llegadas:
+ * public.llegadas_con_correa_ext
  */
 
 type Vuelo = {
   id_vuelo: number;
   origen: string | null;
   destino: string | null;
-  hora_abordaje?: string | null;        // time (nullable)
-  fecha_hora_salida: string | null;     // timestamp
-  fecha_hora_llegada?: string | null;   // timestamp (nullable)
+  hora_abordaje?: string | null;
+  fecha_hora_salida: string | null;
+  fecha_hora_llegada?: string | null;
   estado: string | null;
 };
 
@@ -45,7 +24,7 @@ type LlegadaRow = {
   fecha_hora_salida?: string | null;
   fecha_hora_llegada?: string | null;
   estado?: string | null;
-  correa?: string | null;               // <-- resuelta en la vista
+  correa?: string | null;
 };
 
 type CorreaResumen = {
@@ -64,7 +43,7 @@ export default function TableroVuelos() {
   const [correasResumen, setCorreasResumen] = useState<CorreaResumen[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Ventana (-12h, +36h) para SALIDAS (Llegadas usa la vista sin filtros adicionales)
+  // Ventana (-12h, +36h) para SALIDAS
   const { fromISO, toISO } = useMemo(() => {
     const now = new Date();
     const from = new Date(now.getTime() - 12 * 60 * 60 * 1000);
@@ -78,7 +57,11 @@ export default function TableroVuelos() {
     return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
-  // Chip de SALIDAS (usa el estado tal cual llega de BD)
+  // Valida que origen/destino estén presentes y no vacíos/espacios
+  const tieneOrigenDestino = (o?: string | null, d?: string | null) =>
+    !!(o && d && o.trim().length > 0 && d.trim().length > 0);
+
+  // Chip de SALIDAS
   const chipEstadoSalidas = (estado?: string | null) => {
     const e = (estado ?? "").toLowerCase();
     const map: Record<string, string> = {
@@ -90,13 +73,12 @@ export default function TableroVuelos() {
       demorado: "chip chip--retrasado",
       cancelado: "chip chip--cancelado",
       salido: "chip chip--salido",
-      arribado: "chip chip--arribado",
       "en ruta": "chip chip--salido",
     };
     return map[e] || "chip chip--programado";
   };
 
-  // Estado “traducido” para LLEGADAS (sin mostrar “Abordando”)
+  // Estado para LLEGADAS
   function estadoParaLlegadas(v: {
     fecha_hora_salida?: string | null;
     fecha_hora_llegada?: string | null;
@@ -122,32 +104,61 @@ export default function TableroVuelos() {
   const cargarDatos = async () => {
     setLoading(true);
 
-    // SALIDAS: con ventana de tiempo
-    const { data: sal } = await supabase
+    // ================= SALIDAS =================
+    const { data: sal, error: errSal } = await supabase
       .from("vuelo")
       .select("id_vuelo, origen, destino, hora_abordaje, fecha_hora_salida, estado")
       .gte("fecha_hora_salida", fromISO)
       .lte("fecha_hora_salida", toISO)
+      // ---- filtros para NO traer registros sin origen/destino
+      .not("origen", "is", null)
+      .not("destino", "is", null)
+      .neq("origen", "")
+      .neq("destino", "")
       .order("fecha_hora_salida", { ascending: true });
 
-    // LLEGADAS: vista extendida (ya incluye cualquier vuelo con correa activa)
-    const { data: lle } = await supabase
+    if (errSal) console.error("Error salidas:", errSal);
+
+    // filtro defensivo extra (por si vienen espacios)
+    const salidasFiltradas = ((sal as Vuelo[]) ?? []).filter(v =>
+      tieneOrigenDestino(v.origen, v.destino)
+    );
+    setSalidas(salidasFiltradas);
+
+    // ================= LLEGADAS (vista) =================
+    const { data: lle, error: errLle } = await supabase
       .from("llegadas_con_correa_ext")
       .select(
         "id_vuelo, origen, destino, fecha_hora_salida, fecha_hora_llegada, estado, correa"
       )
+      // ---- filtros para NO traer registros sin origen/destino
+      .not("origen", "is", null)
+      .not("destino", "is", null)
+      .neq("origen", "")
+      .neq("destino", "")
       .order("fecha_hora_llegada", { ascending: true, nullsFirst: false });
 
-    // Resumen de correas: mostramos todas las activas (asignada / en_uso)
-    const { data: corr } = await supabase
-      .from("tablero_correas")
-      .select("id_asignacion, id_vuelo, correa, ubicacion, estado_correa, hora_inicio, hora_fin");
+    if (errLle) console.error("Error llegadas:", errLle);
 
-    setSalidas((sal as Vuelo[]) ?? []);
-    setLlegadas((lle as LlegadaRow[]) ?? []);
-    setCorreasResumen(((corr as CorreaResumen[]) ?? []).filter(
-      x => x.estado_correa === "asignada" || x.estado_correa === "en_uso"
-    ));
+    const llegadasFiltradas = ((lle as LlegadaRow[]) ?? []).filter(v =>
+      tieneOrigenDestino(v.origen, v.destino)
+    );
+    setLlegadas(llegadasFiltradas);
+
+    // ================= CORREAS =================
+    const { data: corr, error: errCorr } = await supabase
+      .from("tablero_correas")
+      .select(
+        "id_asignacion, id_vuelo, correa, ubicacion, estado_correa, hora_inicio, hora_fin"
+      );
+
+    if (errCorr) console.error("Error correas:", errCorr);
+
+    setCorreasResumen(
+      ((corr as CorreaResumen[]) ?? []).filter(
+        x => x.estado_correa === "asignada" || x.estado_correa === "en_uso"
+      )
+    );
 
     setLoading(false);
   };
@@ -157,7 +168,7 @@ export default function TableroVuelos() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fromISO, toISO]);
 
-  // Realtime: nos suscribimos a tablas base, no a vistas
+  // Realtime
   useEffect(() => {
     const channel = supabase
       .channel("tablero-vuelos")
@@ -205,8 +216,8 @@ export default function TableroVuelos() {
                   {salidas.map((v) => (
                     <tr key={`S-${v.id_vuelo}`}>
                       <td>{formatearHora(v.fecha_hora_salida)}</td>
-                      <td>{v.origen ?? "—"}</td>
-                      <td>{v.destino ?? "—"}</td>
+                      <td>{v.origen}</td>
+                      <td>{v.destino}</td>
                       <td>{v.hora_abordaje ?? "—"}</td>
                       <td>
                         <span className={chipEstadoSalidas(v.estado)}>
@@ -218,7 +229,7 @@ export default function TableroVuelos() {
                   {salidas.length === 0 && (
                     <tr>
                       <td colSpan={5} className="vacio">
-                        Sin salidas registradas en la ventana.
+                        Sin salidas con origen/destino válidos.
                       </td>
                     </tr>
                   )}
@@ -227,7 +238,7 @@ export default function TableroVuelos() {
             </div>
           </section>
 
-          {/* LLEGADAS (vista extendida con correa resuelta) */}
+          {/* LLEGADAS */}
           <section className="tablero-card">
             <div className="tablero-card-header">
               <h2>Llegadas de Hoy</h2>
@@ -249,8 +260,8 @@ export default function TableroVuelos() {
                     return (
                       <tr key={`L-${v.id_vuelo}`}>
                         <td>{formatearHora(v.fecha_hora_llegada)}</td>
-                        <td>{v.origen ?? "—"}</td>
-                        <td>{v.destino ?? "—"}</td>
+                        <td>{v.origen}</td>
+                        <td>{v.destino}</td>
                         <td>
                           {v.correa ? (
                             <span className="badge-correa">{v.correa}</span>
@@ -267,7 +278,7 @@ export default function TableroVuelos() {
                   {llegadas.length === 0 && (
                     <tr>
                       <td colSpan={5} className="vacio">
-                        Sin llegadas registradas.
+                        Sin llegadas con origen/destino válidos.
                       </td>
                     </tr>
                   )}
@@ -276,7 +287,7 @@ export default function TableroVuelos() {
             </div>
           </section>
 
-          {/* RESUMEN DE CORREAS (todas las activas) */}
+          {/* RESUMEN DE CORREAS */}
           <section className="tablero-card">
             <div className="tablero-card-header">
               <h2>Correas en uso</h2>
